@@ -1,21 +1,19 @@
-# starter-ts
+# starter-vite-plugin
 
-[![NPM version](https://img.shields.io/npm/v/@elonehoo/starter-ts?color=a1b858&label=)](https://www.npmjs.com/package/@elonehoo/starter-ts)
-
-Starter template for TypeScript library.
+Starter template for Vite Plugin library
 
 ## Try it now!
 
 ### GitHub Template
 
-[Create a repo from this template on GitHub](https://github.com/elonehoo/starter-ts/generate).
+[Create a repo from this template on GitHub](https://github.com/elonehoo/starter-vite-plugin/generate).
 
 ### Clone to local
 
 If you prefer to do it manually with the cleaner git history
 
 ```bash
-sudo npx degit elonehoo/starter-ts my-ts-app
+sudo npx degit elonehoo/starter-vite-plugin my-ts-app
 cd my-ts-app
 pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
 ```
