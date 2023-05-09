@@ -1,0 +1,57 @@
+{
+  "name": "@elonehoo/starter-vite-plugin",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Starter template for Vite Plugin library",
+  "author": "Elone Hoo <hi@elonehoo.me>",
+  "license": "MIT",
+  "homepage": "https://github.com/elonehoo/starter-vite-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elonehoo/starter-vite-plugin"
+  },
+  "bugs": "https://github.com/elonehoo/starter-vite-plugin/issues",
+  "keywords": [
+    "template",
+    "TypeScript",
+    "vite plugin"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "play":"pnpm -C playground run dev",
+    "play:build":"pnpm -C playground run build",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "stale": "stale-del -u",
+    "test": "vitest",
+    "ui": "vitest --ui",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.5",
+    "@types/node": "^18.16.3",
+    "@vitest/ui": "^0.30.1",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.39.0",
+    "statl-del": "^0.0.4",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.3",
+    "vitest": "^0.30.1"
+  }
+}
