@@ -6,6 +6,6 @@ import Starter from '../src'
 export default defineConfig({
   plugins: [
     vue(),
-    Starter()
+    Starter(),
   ],
 })
