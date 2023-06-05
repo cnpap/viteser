@@ -60,8 +60,16 @@ importers:
 
 packages:
 
-  /@antfu/eslint-config-basic@0.39.1(@typescript-eslint/eslint-plugin@5.59.7)(@typescript-eslint/parser@5.59.7)(eslint@8.41.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-6t1nTj/nuXxVj43ZhxWMIhgqXYfI7mhiwTOsVXj7lhmy5YbnU2X6szBLP1tP33tY3VA9cMQysdzxlO/TvYMluA==}
+  /@ampproject/remapping@2.2.1:
+    resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      '@jridgewell/gen-mapping': 0.3.3
+      '@jridgewell/trace-mapping': 0.3.18
+    dev: true
+
+  /@antfu/eslint-config-basic@0.39.3(@typescript-eslint/eslint-plugin@5.59.7)(@typescript-eslint/parser@5.59.7)(eslint@8.41.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-cxV2jcVbLeTbZFgFXETAg2+Lbs0r2k/bU4FSEA9lQV7hVpJvfnfJvqph2w/CQllnIa7zoMmlUZN5JHapk11M9Q==}
     peerDependencies:
       eslint: '>=7.4.0'
     dependencies:
