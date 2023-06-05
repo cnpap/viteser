@@ -20,20 +20,25 @@
     ".": {
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    }
+      "import": "./dist/index.mjs"
+    },
+    "./*": "./*"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.cjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "*.d.ts"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "play": "pnpm -C playground run dev",
     "play:build": "pnpm -C playground run build",
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
     "stale": "stale-del -u",
     "test": "vitest",
     "ui": "vitest --ui",
@@ -49,8 +54,8 @@
     "bumpp": "^9.1.0",
     "eslint": "^8.41.0",
     "statl-del": "^0.0.4",
-    "tsup": "^6.7.0",
     "typescript": "^5.0.4",
+    "unbuild": "^1.2.1",
     "vite": "^4.3.8",
     "vitest": "^0.31.1"
   }
