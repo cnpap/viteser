@@ -4,15 +4,8 @@ import type { Options } from './type'
 export default function Alias(options: Partial<Options> = {}): PluginOption {
   return {
     name: 'vite-plugin-starter',
-    // 插件的配置选项
-    config() {
-      /* eslint-disable no-console */
-      console.log('myPlugin config', options)
-    },
-    // 插件的生命周期钩子
-    async transform(code, id) {
-      console.log('myPlugin transform', id)
-      return code
+    transform(code) {
+      return code.replace('__VITE-PLUGIN__', `Hello Plugin! ${options}`)
     },
   }
 }

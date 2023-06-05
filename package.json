@@ -36,7 +36,6 @@
   },
   "scripts": {
     "play": "pnpm -C playground run dev",
-    "play:build": "pnpm -C playground run build",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "stale": "stale-del -u",
@@ -53,6 +52,7 @@
     "@vitest/ui": "^0.31.1",
     "bumpp": "^9.1.0",
     "eslint": "^8.41.0",
+    "nodemon": "^2.0.22",
     "statl-del": "^0.0.4",
     "typescript": "^5.0.4",
     "unbuild": "^1.2.1",
