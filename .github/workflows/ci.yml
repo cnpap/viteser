@@ -22,7 +22,7 @@ jobs:
           node-version: latest
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: latest
 
@@ -44,7 +44,7 @@ jobs:
           node-version: latest
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: latest
 
@@ -69,7 +69,7 @@ jobs:
           node-version: latest
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+        uses: pnpm/action-setup@v2.4.0
         with:
           version: latest
 
