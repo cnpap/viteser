@@ -48,8 +48,8 @@ importers:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@20.8.0)
       vite-plugin-inspect:
-        specifier: ^0.7.38
-        version: 0.7.38(rollup@3.29.4)(vite@4.4.9)
+        specifier: ^0.7.39
+        version: 0.7.39(rollup@3.29.4)(vite@4.4.9)
 
 packages:
 
@@ -985,7 +985,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.2
       estree-walker: 2.0.2
       picomatch: 2.3.1
       rollup: 3.29.4
@@ -1031,10 +1031,6 @@ packages:
 
   /@types/chai@4.3.6:
     resolution: {integrity: sha512-VOVRLM1mBxIRxydiViqPcKn6MIxZytrbMpd6RJLIWKxUNr3zux8no0Oc7kJx0WAPIitgZ0gkrDS+btlqQpubpw==}
-    dev: true
-
-  /@types/estree@1.0.1:
-    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: true
 
   /@types/estree@1.0.2:
@@ -3966,8 +3962,8 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-inspect@0.7.38(rollup@3.29.4)(vite@4.4.9):
-    resolution: {integrity: sha512-+p6pJVtBOLGv+RBrcKAFUdx+euizg0bjL35HhPyM0MjtKlqoC5V9xkCmO9Ctc8JrTyXqODbHqiLWJKumu5zJ7g==}
+  /vite-plugin-inspect@0.7.39(rollup@3.29.4)(vite@4.4.9):
+    resolution: {integrity: sha512-iVQccBPqeukeWoN0WnkvIoj58kUiYKMZAs6Jy8/bzhtDByB239y8KnJKIwGD9O3d4LcksdE91T2H2bKWAYiqQg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': '*'
