@@ -47,16 +47,16 @@
     "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.4.4",
-    "@types/node": "^20.10.4",
+    "@antfu/eslint-config": "^2.4.6",
+    "@types/node": "^20.10.5",
     "@vitest/ui": "^1.0.4",
     "bumpp": "^9.2.1",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.2",
     "statl-del": "^0.0.4",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
-    "vite": "^5.0.7",
+    "vite": "^5.0.10",
     "vitest": "^1.0.4"
   }
 }
