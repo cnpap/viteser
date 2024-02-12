@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.17",
     "@vitest/ui": "^1.2.2",
     "bumpp": "^9.3.0",
     "eslint": "^8.56.0",
@@ -56,7 +56,7 @@
     "statl-del": "^0.0.4",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
-    "vite": "^5.0.12",
+    "vite": "^5.1.1",
     "vitest": "^1.2.2"
   }
 }
