@@ -1,4 +1,4 @@
-# starter-vite-plugin
+# viteser
 
 Starter template for Vite Plugin library
 
@@ -6,14 +6,14 @@ Starter template for Vite Plugin library
 
 ### GitHub Template
 
-[Create a repo from this template on GitHub](https://github.com/elonehoo/starter-vite-plugin/generate).
+[Create a repo from this template on GitHub](https://github.com/sia-fl/viteser/generate).
 
 ### Clone to local
 
 If you prefer to do it manually with the cleaner git history
 
 ```bash
-sudo npx degit elonehoo/starter-vite-plugin my-ts-app
+sudo npx degit sia-fl/viteser my-ts-app
 cd my-ts-app
 pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
 ```
