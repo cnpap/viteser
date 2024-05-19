@@ -1,19 +1,18 @@
 {
-  "name": "@elonehoo/starter-vite-plugin",
+  "name": "viteser",
   "type": "module",
-  "version": "0.0.0",
-  "description": "Starter template for Vite Plugin library",
-  "author": "Elone Hoo <hi@elonehoo.me>",
+  "version": "0.0.1-beta.1",
+  "description": "允许直接在 vite .vue .tsx .ts 前端文件中写接口",
+  "author": "杨伟杰 <sia-fl@outlook.com>",
   "license": "MIT",
-  "homepage": "https://github.com/elonehoo/starter-vite-plugin",
+  "homepage": "https://github.com/sia-fl/viteser",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elonehoo/starter-vite-plugin"
+    "url": "https://github.com/sia-fl/viteser"
   },
-  "bugs": "https://github.com/elonehoo/starter-vite-plugin/issues",
+  "bugs": "https://github.com/sia-fl/viteser/issues",
   "keywords": [
-    "template",
-    "TypeScript",
+    "use server api",
     "vite plugin"
   ],
   "exports": {
