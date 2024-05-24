@@ -1,7 +1,7 @@
 {
   "name": "viteser",
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "允许直接在 vite .vue .tsx .ts 前端文件中写接口",
   "author": "杨伟杰 <sia-fl@outlook.com>",
   "license": "MIT",
@@ -47,15 +47,28 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.13.3",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/koa": "^2.15.0",
     "@types/node": "^20.12.7",
     "@vitest/ui": "^1.5.0",
     "bumpp": "^9.4.0",
     "eslint": "^9.0.0",
+    "http-proxy-middleware": "^3.0.0",
+    "koa": "^2.15.3",
+    "koa-router": "^12.0.1",
     "nodemon": "^3.1.0",
     "statl-del": "^0.0.4",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "vite": "^5.2.8",
     "vitest": "^1.5.0"
+  },
+  "dependencies": {
+    "@koa/bodyparser": "^5.1.1",
+    "@types/koa__router": "^12.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "koa-zod-router": "^2.3.0",
+    "tsup": "^8.0.2",
+    "zod": "^3.23.8"
   }
 }
