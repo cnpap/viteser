@@ -31,7 +31,6 @@ export function ViteserPlugin(options: ViteserPluginOptions): PluginOption {
     fs.mkdirSync(cachePath, { recursive: true })
   const cwdPath = path.resolve(process.cwd())
   return ({
-    apply: 'serve',
     name: 'viteser',
     async transform(code, id) {
       /**
