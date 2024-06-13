@@ -21,9 +21,9 @@ router.register({
       data,
       code,
       ctx,
-    }, async (id) => {
-      id = url.pathToFileURL(id)
-      return await import(id.href)
+    }, async (id: string) => {
+      const { href } = url.pathToFileURL(id)
+      return await import(href)
     })
   },
   name: '/viteser/call',
