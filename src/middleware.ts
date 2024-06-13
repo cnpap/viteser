@@ -19,8 +19,8 @@ async function funcStatement(code: string, importer: any) {
     if (id.endsWith('.ts')) {
       const mod = await importer(id)
       const callable = mod[func.name]
-      funcStatementMap[code] = (ctx: any, _values: any) => {
-        hooksStorage.run({
+      funcStatementMap[code] = async (ctx: any, _values: any) => {
+        await hooksStorage.run({
           ctx,
           jwt: {},
         }, async () => {
@@ -53,7 +53,6 @@ async function funcStatement(code: string, importer: any) {
     funcStatementMap[code] = (ctx: any, _values: any) => {
       hooksStorage.run({
         ctx,
-
         jwt: {},
       }, async () => {
         const resData = await han(..._values, ...values)

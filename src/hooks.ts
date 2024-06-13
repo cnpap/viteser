@@ -1,9 +1,9 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
 import type { BaseContext } from 'koa'
-import jwt from 'jsonwebtoken'
-import { getToken } from './utils'
+import { decode } from 'jsonwebtoken'
+import { getTokenByHeaders } from './utils'
 
-interface HooksContext<J> {
+export interface HooksContext<J extends Record<string, any>> {
   ctx: BaseContext
   jwt: J
 }
@@ -15,15 +15,16 @@ export function context() {
 }
 
 export function useJwtPayload<T>(): [T, (v: T) => void] {
-  let { payload } = hooksStorage.getStore() as any
+  const jwtPayload = hooksStorage.getStore()?.jwt ?? {}
   function setJwtPayload(p: any) {
-    Object.assign(payload, p)
+    Object.assign(jwtPayload, p)
   }
-  if (!payload) {
+  if (!jwtPayload) {
     const ctx = context()
-    const token = getToken(ctx.headers)
-    payload = jwt.decode(token) as any
-    setJwtPayload(payload)
+    const token = getTokenByHeaders(ctx.headers)
+    const decodeValues = decode(token) as any
+    Object.assign(jwtPayload, decodeValues)
+    setJwtPayload(jwtPayload)
   }
-  return [payload, setJwtPayload]
+  return [jwtPayload, setJwtPayload]
 }

@@ -1,9 +1,13 @@
 import type { IncomingHttpHeaders } from 'node:http'
 import fs from 'node:fs'
 import crypto from 'node:crypto'
+import jwt from 'jsonwebtoken'
+import type { BaseContext } from 'koa'
 import type { ImportedObject } from './type'
+import type { HooksContext } from './hooks'
+import { hooksStorage } from './hooks'
 
-export function getToken(headers: IncomingHttpHeaders) {
+export function getTokenByHeaders(headers: IncomingHttpHeaders) {
   const authorization
     = headers.authorization || headers.Authorization || ''
   const token = (authorization as string).replace('Bearer ', '')
@@ -86,4 +90,29 @@ export function getCachePath() {
 
 export function sha1(id: string) {
   return crypto.createHash('sha1').update(id).digest('hex')
+}
+
+interface TestContextHelperOptions {
+  payload?: any
+  callback: Function
+}
+
+export async function testContextHelper<T extends Record<string, any>>(options: TestContextHelperOptions) {
+  const token = jwt.sign(options.payload, 'secret', {
+    expiresIn: '3h',
+  })
+  const store: HooksContext<T> = {
+    jwt: options.payload,
+    ctx: {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    } as BaseContext,
+  }
+  await hooksStorage.run(
+    store,
+    async () => {
+      await options.callback()
+    },
+  )
 }

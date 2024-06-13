@@ -115,3 +115,4 @@ async function ${funcname}(...args) {
 }
 
 export * from './middleware'
+export * from './hooks'
