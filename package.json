@@ -6,11 +6,11 @@
   "author": "杨伟杰 <sia-fl@outlook.com>",
   "license": "MIT",
   "homepage": "https://github.com/sia-fl/viteser",
+  "packageManager": "pnpm@9.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/sia-fl/viteser"
   },
-  "packageManager": "pnpm@9.1.0",
   "bugs": "https://github.com/sia-fl/viteser/issues",
   "keywords": [
     "use server api",
