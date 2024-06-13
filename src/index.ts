@@ -12,3 +12,4 @@ export function ViteserPlugin(options: ViteserPluginOptions): PluginOption {
 
 export * from './middleware'
 export * from './hooks'
+export * from './utils'
