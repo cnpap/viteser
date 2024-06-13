@@ -1,6 +1,7 @@
 ![banner.png](md/banner.png)
 
-[[ENGLISH](README.md)] [[中文](README-zh.md)]
+[english](README.md)
+[中文](README-zh.md)
 
 ```tsx
 // src/api.ts
@@ -8,6 +9,9 @@ import { db } from './db'
 
 export const getUser = async (id: number) => {
   "use server"
+  /**
+   * 使用 mysql、redis 或其他服务端服务
+   */
   return db.query(`SELECT * FROM users WHERE id = ${id}`)
 }
 
@@ -27,7 +31,7 @@ const App = () => {
 }
 ```
 
-### experience
+### 尝试使用
 
 1. clone test repo
 
@@ -53,21 +57,21 @@ pnpm run dev
 
 😄 now visit: http://localhost:12000
 
-### usage
+### 从已有的项目中启用 【推荐】
 
-1. install viteser and other dependencies
+1. 安装 viteser 及其他依赖
 
 ```bash
 pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router http-proxy-middleware zod
 ```
 
-2. install @types
+2. 安装 @types
 
 ```bash
 pnpm install --save-dev @types/jsonwebtoken @types/signale
 ```
 
-3. copy api.ts to src/api.ts and glob.d.ts to src/glob.d.ts
+3. 拷贝 api.ts 到 src/api.ts 以及 glob.d.ts 到 src/glob.d.ts
 
 windows
 ```bash
@@ -97,7 +101,7 @@ export default defineConfig({
 })
 ```
 
-6. modify package.json
+6. 添加脚本
 
 ```json
 {
@@ -110,7 +114,7 @@ export default defineConfig({
 }
 ```
 
-7. run api and run dev
+7. 运行 api 和 dev
 
 ```bash
 pnpm run api
@@ -120,4 +124,4 @@ pnpm run api
 pnpm run dev
 ```
 
-😄 Remember to access the API port: http://localhost:12000
+😄 记得访问的是 api 端口喔: http://localhost:12000
