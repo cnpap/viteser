@@ -5,21 +5,21 @@
 
 ```tsx
 // src/api.ts
+import { useEffect, useState } from 'react'
 import { db } from './db'
 
-export const getUser = async (id: number) => {
-  "use server"
+// src/App.tsx
+import { getUser } from './api'
+
+export async function getUser(id: number) {
+  'use server'
   /**
    * 使用 mysql、redis 或其他服务端服务
    */
   return db.query(`SELECT * FROM users WHERE id = ${id}`)
 }
 
-// src/App.tsx
-import { getUser } from './api'
-import { useState, useEffect } from 'react'
-
-const App = () => {
+function App() {
   const [user, setUser] = useState<{
     id: number
     name: string
