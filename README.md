@@ -4,18 +4,18 @@
 
 ```tsx
 // src/api.ts
+import { useEffect, useState } from 'react'
 import { db } from './db'
-
-export const getUser = async (id: number) => {
-  "use server"
-  return db.query(`SELECT * FROM users WHERE id = ${id}`)
-}
 
 // src/App.tsx
 import { getUser } from './api'
-import { useState, useEffect } from 'react'
 
-const App = () => {
+export async function getUser(id: number) {
+  'use server'
+  return db.query(`SELECT * FROM users WHERE id = ${id}`)
+}
+
+function App() {
   const [user, setUser] = useState<{
     id: number
     name: string
