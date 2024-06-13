@@ -12,6 +12,7 @@ export default defineBuildConfig({
     'vite',
     'typescript',
     'source-map-support',
+    'koa',
   ],
   rollup: {
     emitCJS: true,
