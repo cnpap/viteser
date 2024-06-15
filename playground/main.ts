@@ -1,9 +1,14 @@
 // noinspection JSUnusedGlobalSymbols
-export function a() {
-  'use server'
 
-  return 'a'
-}
+import { a } from './service'
 
 const app = document.getElementById('app')
-app!.innerHTML = '__VITE-PLUGIN__'
+
+// 设置一个 button，用来触发 a 函数
+const button = document.createElement('button')
+button.innerText = 'click me'
+button.onclick = async () => {
+  console.log(await a('world'))
+}
+
+app!.appendChild(button)

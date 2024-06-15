@@ -49,6 +49,14 @@ export interface ViteserPluginOptions {
    * server port
    */
   serverPort?: number
+  /**
+   * fetch tool name
+   *
+   * @default fetch
+   *
+   * @supported axios
+   */
+  fetchTool?: 'fetch' | 'axios'
 }
 
 export declare type ZodTypeAny = ZodType<any, any, any>

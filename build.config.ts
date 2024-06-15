@@ -13,6 +13,7 @@ export default defineBuildConfig({
     'typescript',
     'source-map-support',
     'koa',
+    'zod',
   ],
   rollup: {
     emitCJS: true,

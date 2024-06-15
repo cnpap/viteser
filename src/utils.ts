@@ -139,11 +139,59 @@ function analyzeOption(): AnalyzedOptions {
   }
 }
 
+type TemplateMaker = (funcname: string, funcCode: string) => string
+
+function fetchTemplete(funcname: string, funcCode: string) {
+  return `\
+async function ${funcname}(...args) {
+  const __token__ = localStorage.getItem('token')
+  return fetch('/viteser/call', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': __token__ ? 'Bearer ' + __token__ : '',
+    },
+    body: JSON.stringify({
+      code: '${funcCode}',
+      data: args,
+    })
+  })
+    .then(async (res) => {
+      const data = await res.json()
+      if (!data.success) {
+        throw new Error('fail on use server function')
+      }
+      return data.data
+    })
+}`
+}
+
+function axiosTemplate(funcname: string, funcCode: string) {
+  return `\
+async function ${funcname}(...args) {
+  const __api = await import('axios').then((m) => m.default)
+  return __api.post('/viteser/call', {
+    code: '${funcCode}',
+    data: args,
+  })
+    .then(async (res) => {
+      const data = res.data
+      if (!data.success) {
+        throw new Error('fail on use server function')
+      }
+      return data.data
+    })
+}`
+}
+
 export function pluginPack(options: ViteserPluginOptions) {
   const cachePath = getCachePath()
   if (!fs.existsSync(cachePath))
     fs.mkdirSync(cachePath, { recursive: true })
   const cwdPath = path.resolve(process.cwd())
+  let fetchTemplate: TemplateMaker = fetchTemplete
+  if (options.fetchTool === 'axios')
+    fetchTemplate = axiosTemplate
   return {
     async transform(code: string, id: string) {
       /**
@@ -193,28 +241,7 @@ export function pluginPack(options: ViteserPluginOptions) {
           id: oldid,
           func,
         }))
-        let newCode = `\
-async function ${funcname}(...args) {
-  const __token__ = localStorage.getItem('token')
-  return fetch('/viteser/call', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': __token__ ? 'Bearer ' + __token__ : '',
-    },
-    body: JSON.stringify({
-      code: '${funcCode}',
-      data: args,
-    })
-  })
-    .then(async (res) => {
-      const data = await res.json()
-      if (!data.success) {
-        throw new Error('fail on use server function')
-      }
-      return data.data
-    })
-}`
+        let newCode = fetchTemplate(funcname, funcCode)
         if (/\.(ts)/.test(oldid))
           newCode = `export ${newCode}`
         const newCodeLength = newCode.length
