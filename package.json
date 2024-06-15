@@ -1,7 +1,7 @@
 {
   "name": "viteser",
   "type": "module",
-  "version": "0.0.1-beta.9",
+  "version": "0.0.1-beta.10",
   "packageManager": "pnpm@9.1.0",
   "description": "允许直接在 vite .vue .tsx .ts 前端文件中写接口",
   "author": "杨伟杰 <sia-fl@outlook.com>",
