@@ -28,3 +28,31 @@ export function useJwtPayload<T>(): [T, (v: T) => void] {
   }
   return [jwtPayload, setJwtPayload]
 }
+
+export function makeMiddleware(func: Function) {
+  return async () => {
+    const ctx = context()
+    let breakFlag = false
+    try {
+      const result = await func()
+      /**
+       * 如果有值，则直接返回
+       */
+      if (result) {
+        breakFlag = true
+        ctx.body = result
+      }
+    }
+    catch (e: any) {
+      ctx.status = 500
+      ctx.body = {
+        success: false,
+        message: e.message,
+      }
+      throw e
+    }
+
+    if (breakFlag)
+      throw new Error(`middleware break`)
+  }
+}
