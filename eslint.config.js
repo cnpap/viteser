@@ -4,7 +4,7 @@ import antfu from '@antfu/eslint-config'
 // noinspection JSUnusedGlobalSymbols
 export default antfu({
   // 忽略
-  ignores: ['example/**/*'],
+  ignores: ['example/**/*', 'playground/main.ts'],
   rules: {
     // evel
     'no-eval': 'off',
