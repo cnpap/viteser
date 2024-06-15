@@ -1,4 +1,4 @@
-export function a(name: string) {
+export async function a(name: string) {
   'use server'
 
   return {
