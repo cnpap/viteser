@@ -41,17 +41,11 @@ git clone https://github.com/sia-fl/viteser-demo.git
 pnpm install
 ```
 
-3. start api and dev
-
-```bash
-pnpm run api
-```
+3. run dev
 
 ```bash
 pnpm run dev
 ```
-
-😄 now visit: http://localhost:12000
 
 ### usage
 
@@ -67,18 +61,10 @@ pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router ht
 pnpm install --save-dev @types/jsonwebtoken @types/signale
 ```
 
-3. copy api.ts to src/api.ts and glob.d.ts to src/glob.d.ts
+3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
 
-windows
-```bash
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts -OutFile src/api.ts
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/glob.d.ts -OutFile src/glob.d.ts
-```
-
-linux or macos
 ```bash
 wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts
-wget -O src/glob.d.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/glob.d.ts
 ```
 
 5. modify vite.config.ts
@@ -92,32 +78,13 @@ import { ViteserPlugin } from 'viteser'
 export default defineConfig({
   plugins: [
     // react() or vue() or other . . .
-    ViteserPlugin({ vitePort: 5173, serverPort: 12000 }),
+    ViteserPlugin(),
   ],
 })
 ```
 
-6. modify package.json
-
-```json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    // other scripts . . .
-    "api": "tsx src/api.ts"
-  }
-}
-```
-
-7. run api and run dev
+6. run service
 
 ```bash
-pnpm run api
+tsx src/api.ts
 ```
-
-```bash
-pnpm run dev
-```
-
-😄 Remember to access the API port: http://localhost:12000
