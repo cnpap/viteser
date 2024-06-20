@@ -1,6 +1,6 @@
 ![banner.png](md/banner.png)
 
-[[ENGLISH](README-en)] [[中文](README)]
+[[ENGLISH](README-en.md)] [[中文](README.md)]
 
 ```tsx
 // src/api.ts
