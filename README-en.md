@@ -1,6 +1,6 @@
 ![banner.png](md/banner.png)
 
-[[ENGLISH](README.md)] [[中文](README-zh.md)]
+[[ENGLISH](README-en)] [[中文](README)]
 
 ```tsx
 // src/api.ts
@@ -27,47 +27,29 @@ function App() {
 }
 ```
 
-### 使用体验
+## 🏃🏻‍♂️‍➡️ start
 
-1. 克隆测试仓库
+---
 
-```bash
-git clone https://github.com/sia-fl/viteser-demo.git
-```
-
-2. 安装依赖
-
-```bash
-pnpm install
-```
-
-3. 运行开发服务器
-
-```bash
-pnpm run dev
-```
-
-### 使用方法
-
-1. 安装 viteser 及其他依赖
+1. install viteser and other dependencies
 
 ```bash
 pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router http-proxy-middleware zod
 ```
 
-2. 安装类型定义
+2. install @types
 
 ```bash
 pnpm install --save-dev @types/jsonwebtoken @types/signale
 ```
 
-3. 复制 [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
+3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
 
 ```bash
 wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts
 ```
 
-4. 修改 vite.config.ts
+5. modify vite.config.ts
 
 ```ts
 import { defineConfig } from 'vite'
@@ -77,14 +59,22 @@ import { ViteserPlugin } from 'viteser'
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
   plugins: [
-    // react() 或 vue() 或其他 . . .
+    // react() or vue() or other . . .
     ViteserPlugin(),
   ],
 })
 ```
 
-5. 运行开发服务器
+6. run service
 
 ```bash
 tsx src/api.ts
 ```
+
+#### 🔍 simple demo
+
+https://github.com/sia-fl/viteser-demo
+
+#### 📦 reference best practice projects
+
+https://github.com/sia-fl/buess

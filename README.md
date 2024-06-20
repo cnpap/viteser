@@ -1,6 +1,6 @@
 ![banner.png](md/banner.png)
 
-[[ENGLISH](README.md)] [[中文](README-zh.md)]
+[[ENGLISH](README-en)] [[中文](README)]
 
 ```tsx
 // src/api.ts
@@ -27,47 +27,29 @@ function App() {
 }
 ```
 
-### experience
+## 🏃🏻‍♂️‍➡️ 开始
 
-1. clone test repo
+---
 
-```bash
-git clone https://github.com/sia-fl/viteser-demo.git
-```
-
-2. install dependencies
-
-```bash
-pnpm install
-```
-
-3. run dev
-
-```bash
-pnpm run dev
-```
-
-### usage
-
-1. install viteser and other dependencies
+1. 安装 viteser 和其他依赖
 
 ```bash
 pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router http-proxy-middleware zod
 ```
 
-2. install @types
+2. 安装 @types
 
 ```bash
 pnpm install --save-dev @types/jsonwebtoken @types/signale
 ```
 
-3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
+3. 复制 [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
 
 ```bash
 wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts
 ```
 
-5. modify vite.config.ts
+5. 修改 vite.config.ts
 
 ```ts
 import { defineConfig } from 'vite'
@@ -83,8 +65,16 @@ export default defineConfig({
 })
 ```
 
-6. run service
+6. 运行服务
 
 ```bash
 tsx src/api.ts
 ```
+
+#### 🔍 简单示例
+
+https://github.com/sia-fl/viteser-demo
+
+#### 📦 参考最佳实践项目
+
+https://github.com/sia-fl/buess
