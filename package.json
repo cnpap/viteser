@@ -43,7 +43,7 @@
     "ui": "vitest --ui",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public"
   },
   "dependencies": {
