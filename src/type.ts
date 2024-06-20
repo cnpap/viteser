@@ -42,14 +42,6 @@ export interface ViteserPluginOptions {
    */
   config?: string
   /**
-   * vite port
-   */
-  vitePort?: number
-  /**
-   * server port
-   */
-  serverPort?: number
-  /**
    * fetch tool name
    *
    * @default fetch

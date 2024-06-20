@@ -7,6 +7,6 @@ import { ViteserPlugin } from '../src'
 export default defineConfig({
   plugins: [
     Inspect(),
-    ViteserPlugin({ vitePort: 18996, serverPort: 18997, fetchTool: 'axios' }),
+    ViteserPlugin({ fetchTool: 'axios' }),
   ],
 })

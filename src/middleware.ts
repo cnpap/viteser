@@ -49,7 +49,8 @@ async function funcStatement(code: string, importer: any) {
     const temp = compileTypeScript(`
   async function ${func.name}(${params.join(', ')}) ${func.body}
   `)
-    const han = eval(`(${temp})`)
+    // eslint-disable-next-line no-new-func
+    const han = new Function(`return ${temp}`)()
     funcStatementMap[code] = (ctx: any, _values: any) => {
       hooksStorage.run({
         ctx,
