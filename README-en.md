@@ -71,10 +71,10 @@ export default defineConfig({
 tsx src/api.ts
 ```
 
-#### 🔍 simple demo
+#### 🔍 quick start
 
 https://github.com/sia-fl/viteser-demo
 
-#### 📦 reference best practice projects
+#### 📦 best practices (Long-Term Maintenance)
 
 https://github.com/sia-fl/buess
