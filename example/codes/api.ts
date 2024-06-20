@@ -1,7 +1,6 @@
 import * as url from 'node:url'
 import Koa from 'koa'
 import k2c from 'koa2-connect/ts'
-import signale from 'signale'
 import zodRouter from 'koa-zod-router'
 import { z } from 'zod'
 import { handleMiddleware } from 'viteser'
