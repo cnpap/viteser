@@ -64,7 +64,7 @@ function ReactComponent() {
        * 读取 ./codetxt/sign-in.txt 文件内容
        */
       const sourceCode = fs.readFileSync(path.resolve('src/codetxt/sign-in.txt')).toString()
-      const result = (await pluginPack() as any)?.transform(sourceCode, 'src/codetxt/sign-in.ts')
+      const result = await (pluginPack() as any)?.transform(sourceCode, 'src/codetxt/sign-in.ts')
       expect(result).contain('export async function signIn')
       expect(result).contain('-sign-in-signIn\'')
     },
