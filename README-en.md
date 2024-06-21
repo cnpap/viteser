@@ -34,22 +34,10 @@ function App() {
 1. install viteser and other dependencies
 
 ```bash
-pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router http-proxy-middleware zod
+pnpm install viteser tsx
 ```
 
-2. install @types
-
-```bash
-pnpm install --save-dev @types/jsonwebtoken @types/signale
-```
-
-3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/vs/main/example/codes/api.ts)
-
-```bash
-wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/vs/main/example/codes/api.ts
-```
-
-5. modify vite.config.ts
+2. modify vite.config.ts
 
 ```ts
 import { defineConfig } from 'vite'
@@ -59,16 +47,16 @@ import { ViteserPlugin } from 'viteser'
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
   plugins: [
-    // react() or vue() or other . . .
     ViteserPlugin(),
+    // react() or vue() or other . . .
   ],
 })
 ```
 
-6. run service
+3. run service
 
 ```bash
-tsx src/api.ts
+npx tsx node_modules/vite/bin/vite.js
 ```
 
 #### 🔍 quick start
