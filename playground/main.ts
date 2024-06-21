@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // noinspection JSUnusedGlobalSymbols
 
 import { a } from './service'
@@ -10,7 +9,10 @@ const button = document.createElement('button')
 button.textContent = 'click me'
 button.onclick = async () => {
   a('world')
-    .then(console.info)
+    .then((res) => {
+      // eslint-disable-next-line no-alert
+      alert(`服务端返回了: ${res.hello}`)
+    })
 }
 
 app!.appendChild(button)
