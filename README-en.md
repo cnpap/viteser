@@ -43,10 +43,10 @@ pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router ht
 pnpm install --save-dev @types/jsonwebtoken @types/signale
 ```
 
-3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
+3. copy [api.ts](https://raw.githubusercontent.com/sia-fl/vs/main/example/codes/api.ts)
 
 ```bash
-wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts
+wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/vs/main/example/codes/api.ts
 ```
 
 5. modify vite.config.ts
@@ -73,7 +73,7 @@ tsx src/api.ts
 
 #### 🔍 quick start
 
-https://github.com/sia-fl/viteser-demo
+https://github.com/sia-fl/vs-demo
 
 #### 📦 best practices (Long-Term Maintenance)
 

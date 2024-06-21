@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import url from 'node:url'
 import type { UseServerFunction } from './type'
 import { compileTypeScript } from './ast'
 import { asyncImport, getCachePath } from './utils'
@@ -72,11 +73,16 @@ export interface HandleMiddlewareOptionType {
   code: string
 }
 
+async function defaultImporter(id: string) {
+  const { href } = url.pathToFileURL(id)
+  return await import(href)
+}
+
 /**
  * 因为不想约束使用者的框架选择，该函数只实现基本调用逻辑，其他部分由使用者补齐
  */
 // noinspection JSUnusedGlobalSymbols
-export async function handleMiddleware({ data, code, ctx }: HandleMiddlewareOptionType, importer: any) {
+export async function handleMiddleware({ data, code, ctx }: HandleMiddlewareOptionType, importer: any = defaultImporter) {
   const values = [...data]
   await funcStatement(code, importer)
   await funcStatementMap[code](ctx, values)

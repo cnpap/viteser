@@ -1,8 +1,8 @@
 import type { PluginOption } from 'vite'
 import type { ViteserPluginOptions } from './type'
-import { pluginPack } from './utils'
+import { pluginPack } from './plugin'
 
-export function ViteserPlugin(options: ViteserPluginOptions): PluginOption {
+export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption {
   const pack = pluginPack(options)
   return ({
     name: 'viteser',

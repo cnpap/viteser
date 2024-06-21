@@ -6,12 +6,12 @@
   "description": "允许直接在 vite .vue .tsx .ts 前端文件中写接口",
   "author": "杨伟杰 <sia-fl@outlook.com>",
   "license": "MIT",
-  "homepage": "https://github.com/sia-fl/viteser",
+  "homepage": "https://github.com/sia-fl/vs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sia-fl/viteser"
+    "url": "https://github.com/sia-fl/vs"
   },
-  "bugs": "https://github.com/sia-fl/viteser/issues",
+  "bugs": "https://github.com/sia-fl/vs/issues",
   "keywords": [
     "use server api",
     "vite plugin"
@@ -47,6 +47,8 @@
     "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public"
   },
   "dependencies": {
+    "@hono/node-server": "^1.11.4",
+    "hono": "^4.4.7",
     "jsonwebtoken": "^9.0.2",
     "tsup": "^8.0.2"
   },

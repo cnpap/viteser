@@ -34,22 +34,10 @@ function App() {
 1. 安装 viteser 和其他依赖
 
 ```bash
-pnpm install viteser tsx koa koa2-connect jsonwebtoken signale koa-zod-router http-proxy-middleware zod
+pnpm install viteser tsx
 ```
 
-2. 安装 @types
-
-```bash
-pnpm install --save-dev @types/jsonwebtoken @types/signale
-```
-
-3. 复制 [api.ts](https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts)
-
-```bash
-wget -O src/api.ts https://raw.githubusercontent.com/sia-fl/viteser/main/example/codes/api.ts
-```
-
-5. 修改 vite.config.ts
+2. 修改 vite.config.ts
 
 ```ts
 import { defineConfig } from 'vite'
@@ -59,21 +47,21 @@ import { ViteserPlugin } from 'viteser'
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
   plugins: [
-    // react() or vue() or other . . .
     ViteserPlugin(),
+    // react() or vue() or other . . .
   ],
 })
 ```
 
-6. 运行服务
+3. 运行服务
 
 ```bash
-tsx src/api.ts
+npx tsx node_modules/vite/bin/vite.js
 ```
 
 #### 🔍 快速启动
 
-https://github.com/sia-fl/viteser-demo
+https://github.com/sia-fl/vs-demo
 
 #### 📦 最佳实践（长期维护）
 

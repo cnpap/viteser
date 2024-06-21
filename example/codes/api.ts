@@ -53,6 +53,12 @@ async function run() {
   app.use(k2c(viteServer.middlewares))
 
   app.listen(SERVER_PORT, () => {
+    viteServer.resolvedUrls = {
+      local: [
+        `http://localhost:${SERVER_PORT}`,
+      ],
+      network: [],
+    }
     viteServer.printUrls()
   })
 }

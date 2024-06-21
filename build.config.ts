@@ -12,11 +12,12 @@ export default defineBuildConfig({
     'vite',
     'typescript',
     'source-map-support',
-    'koa',
-    'zod',
   ],
   rollup: {
     emitCJS: true,
+    dts: {
+      respectExternal: false,
+    },
     output: {
       exports: 'named',
     },
