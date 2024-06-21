@@ -61,7 +61,7 @@ npx tsx node_modules/vite/bin/vite.js
 
 #### 🔍 快速启动
 
-https://github.com/sia-fl/vs-demo
+https://github.com/sia-fl/viteser-demo
 
 #### 📦 最佳实践（长期维护）
 
