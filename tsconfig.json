@@ -6,6 +6,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -13,8 +14,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "example"]
