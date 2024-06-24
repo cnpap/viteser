@@ -49,6 +49,10 @@ export interface ViteserPluginOptions {
    * @supported axios
    */
   fetchTool?: 'fetch' | 'axios'
+  /**
+   * 在初始化之前执行的函数钩子
+   */
+  beforeInit?: () => Promise<void>
 }
 
 export declare type ZodTypeAny = ZodType<any, any, any>

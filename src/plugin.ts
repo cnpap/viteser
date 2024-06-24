@@ -84,12 +84,16 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
   if (options.fetchTool === 'axios')
     fetchTemplate = axiosTemplate
 
+  const beforeInit = options.beforeInit ?? (async () => { })
+
   return {
     name: 'viteser',
-    configurePreviewServer(server) {
+    async configurePreviewServer(server) {
+      await beforeInit()
       useServerFunction(server.middlewares)
     },
-    configureServer(server) {
+    async configureServer(server) {
+      await beforeInit()
       useServerFunction(server.middlewares)
     },
     async transform(code: string, id: string) {
