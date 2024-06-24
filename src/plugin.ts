@@ -4,7 +4,7 @@ import process from 'node:process'
 import type { Connect, PluginOption } from 'vite'
 import ts from 'typescript'
 import type { AnalyzedOptions, ImportedObject, UseServerFunction, ViteserPluginOptions } from './type'
-import { analyzeUseServerNode, extractImports } from './ast'
+import { analyzeUseServerNode, extractImports, removeAllImports } from './ast'
 import { getCachePath, sha1 } from './utils'
 import handleFunction from './server'
 
@@ -116,6 +116,7 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
        */
       const oldid = id
       id = id.replace(/\.\w+$/, '')
+
       /**
        * 获取文件最后一个 / 后的内容
        */
@@ -147,6 +148,8 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
         code = bcode + newCode + acode
         positionDiff += newCodeLength - badiff
       }
+      if (analyzedOptions.functions.length > 0 && /\.(ts)/.test(oldid))
+        code = removeAllImports(virtualSourceFile(id, code))
 
       return code
     },

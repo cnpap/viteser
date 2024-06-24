@@ -3,7 +3,7 @@ import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import ts from 'typescript'
 import type { AnalyzedOptions, ImportedObject, UseServerFunction } from './type'
-import { analyzeUseServerNode, extractImports, findPipeAssignments } from './ast'
+import { analyzeUseServerNode, extractImports, findPipeAssignments, removeAllImports } from './ast'
 import { pluginPack } from './plugin'
 
 describe('should', () => {
@@ -91,6 +91,23 @@ const accc = pipe(zodResolver(z.object({
       const assignments = findPipeAssignments(sourceFile)
       expect(assignments.length).eq(1)
       expect(assignments[0]).eq('accc')
+    },
+  )
+
+  it(
+    'remove all import statements',
+    () => {
+      const sourceCode = fs.readFileSync(path.resolve('src/codetxt/sign-in.txt')).toString()
+      const sourceFile = ts.createSourceFile(
+        'example.ts',
+        sourceCode,
+        ts.ScriptTarget.ESNext,
+        true,
+      )
+      const result = removeAllImports(sourceFile)
+      expect(result).not.contain(`import { z }`)
+      expect(result).not.contain(`import { facade }`)
+      expect(result).not.contain(`import { genToken }`)
     },
   )
 })

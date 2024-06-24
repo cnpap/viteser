@@ -2,6 +2,22 @@ import type { Block, FunctionBody, ParameterDeclaration } from 'typescript'
 import ts from 'typescript'
 import type { AnalyzedOptions, ImportedObject, UseServerParams } from './type'
 
+export function removeAllImports(node: ts.Node): string {
+  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
+  function visit(node: ts.Node, context: ts.TransformationContext): ts.Node | undefined {
+    // 如果是 ImportDeclaration，则返回 undefined，相当于删除这个节点
+    if (ts.isImportDeclaration(node))
+      return undefined
+
+    return ts.visitEachChild(node, child => visit(child, context), context)
+  }
+  const result = ts.transform(node, [context => root => visit(root, context) as ts.Node])
+  const transformedSourceFile = result.transformed[0]
+  const resultText = printer.printFile(transformedSourceFile as ts.SourceFile)
+  result.dispose()
+  return resultText
+}
+
 export function compileTypeScript(code: string) {
   const compilerOptions = {
     module: ts.ModuleKind.CommonJS,

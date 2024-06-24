@@ -1,7 +1,9 @@
+import { info } from './data'
+
 export async function a(name: string) {
   'use server'
 
   return {
-    hello: name,
+    hello: `${info.name} ${info.version} ${name}`,
   }
 }
