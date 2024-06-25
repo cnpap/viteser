@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { testContextHelper } from './utils'
-import { context, makeMiddleware, useJwtPayload } from './hooks'
+import { context, makeMiddleware, useJwtPayload } from './hooks.ts'
+import { testContextHelper } from './test.ts'
 
 const testUserPayload = {
   id: 'admin',

@@ -1,9 +1,10 @@
 import fs from 'node:fs'
 import url from 'node:url'
-import type { UseServerFunction } from './type'
-import { compileTypeScript } from './ast'
-import { asyncImport, getCachePath } from './utils'
-import { hooksStorage } from './hooks'
+import type { UseServerFunction } from './types/type.ts'
+import { compileTypeScript } from './utils/ast.ts'
+import { hooksStorage } from './utils/hooks.ts'
+import { getCachePath } from './utils/path.ts'
+import { loadImportIdentifier } from './utils/load.ts'
 
 const funcStatementMap: Record<string, any> = {}
 
@@ -37,7 +38,7 @@ async function funcStatement(code: string, importer: any) {
     /**
      * 要将 usedImports 中 identifier 相同的去重复
      */
-    const importParams = asyncImport(func.usedImports, importer)
+    const importParams = loadImportIdentifier(func.usedImports, importer)
     const params: any[] = func.params.map((p: any) => p.name)
     const values: any[] = []
     if (importParams.length > 0) {

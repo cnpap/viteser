@@ -9,7 +9,7 @@ export default defineConfig(async () => {
   return ({
     plugins: [
       Inspect(),
-      ViteserPlugin({ fetchTool: 'axios' }),
+      ViteserPlugin(),
     ],
   })
 })

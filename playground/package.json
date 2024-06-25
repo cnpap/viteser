@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "tsx node_modules/vite/bin/vite.js",
-    "build": "vite build"
+    "build": "vite build",
+    "proxy": "tsx api.ts"
   },
   "devDependencies": {
     "http-proxy-middleware": "^3.0.0",

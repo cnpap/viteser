@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
 import type { BaseContext } from 'koa'
 import { decode } from 'jsonwebtoken'
-import { getTokenByHeaders } from './utils'
+import { getTokenByHeaders } from './http.ts'
 
 export interface HooksContext<J extends Record<string, any>> {
   ctx: BaseContext

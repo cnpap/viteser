@@ -1,6 +1,6 @@
 import type { Block, FunctionBody, ParameterDeclaration } from 'typescript'
 import ts from 'typescript'
-import type { AnalyzedOptions, ImportedObject, UseServerParams } from './type'
+import type { AnalyzedOptions, ImportedObject, UseServerFunction, UseServerParams } from '../types/type.ts'
 
 export function removeAllImports(node: ts.Node): string {
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
@@ -180,4 +180,22 @@ export function findPipeAssignments(node: ts.Node) {
   }
   ts.forEachChild(node, visit)
   return assignments
+}
+
+export function virtualSourceFile(id: string, code: string) {
+  return ts.createSourceFile(
+    id,
+    code,
+    ts.ScriptTarget.ESNext,
+    true,
+  )
+}
+
+export function analyzeOption(): AnalyzedOptions {
+  const importsMap: Record<string, ImportedObject> = {}
+  const functions: UseServerFunction[] = []
+  return {
+    importsMap,
+    functions,
+  }
 }
