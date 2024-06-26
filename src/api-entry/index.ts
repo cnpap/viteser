@@ -38,9 +38,9 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
         .usedImports
         .map((u) => {
           let mKey = u.identifier
-          if (u.type === 'default') {
+          if (u.type === 'default')
             mKey = 'default'
-          }
+
           if (u.moduleName.startsWith('.')) {
             const dir = path.dirname(funcPayload.id)
             u.moduleName = path.resolve(dir, u.moduleName)
