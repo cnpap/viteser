@@ -27,8 +27,7 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
       /**
        * 如果是 tsx 或者 vue 文件，提取 imports
        */
-      if (/\.(?:tsx|vue)/.test(id))
-        extractImports(file, analyzedOptions.importsMap)
+      extractImports(file, analyzedOptions.importsMap)
       analyzeUseServerNode(file, analyzedOptions)
       /**
        * 去除后缀
