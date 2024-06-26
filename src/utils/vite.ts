@@ -119,6 +119,7 @@ export function viteConfig(options: ViteserPluginOptions) {
         cssTarget: false,
         modulePreload: false,
         sourcemap: false,
+        copyPublicDir: false,
         lib: {
           entry: virmod,
         },
