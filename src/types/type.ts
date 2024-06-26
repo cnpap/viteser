@@ -1,6 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import type { ZodType, input, output } from 'zod'
+import type { UserConfig } from 'vite'
 
 export interface ImportedObject {
   type: 'default' | 'named' | 'namespace'
@@ -40,7 +41,7 @@ export interface ViteserPluginOptions {
    *
    * @todo 暂未启用
    */
-  config?: string
+  config?: UserConfig
   /**
    * fetch tool name
    *

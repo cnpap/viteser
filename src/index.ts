@@ -1,7 +1,6 @@
 import type { PluginOption } from 'vite'
-import type { ViteserPluginOptions } from './types/type.ts'
+import type { ViteserPluginOptions } from './types/type'
 import { pluginPack } from './plugin'
-import handleFunction from './server'
 
 export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption {
   const pack = pluginPack(options)
@@ -11,6 +10,5 @@ export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption 
   })
 }
 
-export { handleFunction }
-export * from './middleware'
-export * from './utils/hooks.ts'
+export * from './utils/server.ts'
+export * from './utils/hooks'

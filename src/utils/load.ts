@@ -18,15 +18,19 @@ export function loadImportIdentifier(usedImports: ImportedObject[], importer: an
       if (usedImport.type === 'named') {
         return {
           identifier: usedImport.identifier,
-          data: importer(usedImport.moduleName).then(
-            (m: any) => m[usedImport.identifier],
-          ),
+          data: importer(usedImport.moduleName)
+            .then(
+              (m: any) => m[usedImport.identifier],
+            ),
         }
       }
       if (usedImport.type === 'default') {
         return {
           identifier: usedImport.identifier,
-          data: importer(usedImport.moduleName).then((m: any) => m.default),
+          data: importer(usedImport.moduleName)
+            .then(
+              (m: any) => m.default,
+            ),
         }
       }
       return null

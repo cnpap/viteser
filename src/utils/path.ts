@@ -19,10 +19,10 @@ function getNodeModulesPath() {
   }
 
   // 处理 Windows 路径的情况
-  const formattedPath = basePath.replace(/^\/([A-Za-z]:\/)/, '$1')
+  const formattedPath = basePath.replace(/^\/([A-Z]:\/)/i, '$1')
 
   // 寻找最近的 node_modules 路径
-  const segments = formattedPath.split(/[\/\\]/)
+  const segments = formattedPath.split(/[/\\]/)
   while (segments.length > 0) {
     const potentialPath = `${segments.join('/')}/node_modules`
     try {

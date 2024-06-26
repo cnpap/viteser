@@ -4,18 +4,21 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "tsx node_modules/vite/bin/vite.js",
+    "dev": "vite",
     "build": "vite build",
-    "proxy": "tsx api.ts"
+    "preview": "vite preview",
+    "proxy": "tsx src/api.ts",
+    "start": "node dist-vs-api/cjs/api.cjs"
+  },
+  "dependencies": {
+    "react": "18.2",
+    "react-dom": "18.2"
   },
   "devDependencies": {
-    "http-proxy-middleware": "^3.0.0",
-    "koa": "^2.15.3",
-    "koa-zod-router": "^2.3.0",
-    "koa2-connect": "^1.0.2",
-    "tsx": "^4.15.5",
+    "@types/react": "18.2",
+    "@types/react-dom": "18.2",
+    "@vitejs/plugin-react": "^4.3.1",
     "vite": "^5.2.8",
-    "vite-plugin-inspect": "^0.8.3",
-    "zod": "^3.23.8"
+    "vite-plugin-inspect": "^0.8.4"
   }
 }

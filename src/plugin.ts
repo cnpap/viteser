@@ -19,7 +19,7 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
     ...confRest,
     async transform(code: string, id: string) {
       id = trimQMark(id)
-      if ((options.filter && !options.filter(id)) || !/\.(tsx|vue|ts)/.test(id))
+      if ((options.filter && !options.filter(id)) || !/\.(?:tsx|vue|ts)/.test(id))
         return code
 
       const file = virtualSourceFile(id, code)
@@ -27,7 +27,7 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
       /**
        * 如果是 tsx 或者 vue 文件，提取 imports
        */
-      if (/\.(tsx|vue)/.test(id))
+      if (/\.(?:tsx|vue)/.test(id))
         extractImports(file, analyzedOptions.importsMap)
       analyzeUseServerNode(file, analyzedOptions)
       /**
@@ -60,13 +60,13 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
           func,
         }))
         let newCode = fetchTemplate(funcname, funcCode)
-        if (/\.(ts)/.test(id))
+        if (/\.ts/.test(id))
           newCode = `export ${newCode}`
         const newCodeLength = newCode.length
         code = bcode + newCode + acode
         positionDiff += newCodeLength - badiff
       }
-      if (analyzedOptions.functions.length > 0 && /\.(ts)/.test(id))
+      if (analyzedOptions.functions.length > 0 && /\.ts$/.test(id))
         code = removeAllImports(virtualSourceFile(id, code))
 
       return code
