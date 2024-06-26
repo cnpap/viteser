@@ -4,7 +4,6 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
   entries: [
     'src/index',
-    'src/middleware',
   ],
   clean: true,
   declaration: true,
