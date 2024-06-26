@@ -93,19 +93,140 @@ describe('should', () => {
       fileCode1: func1,
       fileCode2: func2,
     })
-    expect(code).eq(`\
-    if (code === 'fileCode1') {
-      import('/path1/demo.ts')
-        .then(m => {
-          m.getUserInfo(...data)
-        })
+    expect(code).eq(`    if (code === 'fileCode1') {
+      const importData = await Promise.all([
+          import('@/services/middlewares')
+            .then(m => m['signInedMiddleware']),
+          import('viteser')
+            .then(m => m['useJwtPayload']),
+          import('@/utils/facade-init')
+            .then(m => m['maPrisma']),
+          import('@/services/func')
+            .then(m => m['genToken'])
+      ])
+      const values = [
+        ...data,
+        ...importData
+      ]
+      return (
+        async (signInedMiddleware, useJwtPayload, maPrisma, genToken) => {
+    "use server";
+    await signInedMiddleware();
+    const [payload] = useJwtPayload();
+    const user = await maPrisma().user.findFirstOrThrow({
+        where: {
+            id: payload.id
+        },
+        select: {
+            id: true,
+            email: true,
+            name: true,
+            TeamMembers: {
+                select: {
+                    status: true,
+                    teamId: true,
+                    role: true,
+                    Team: {
+                        select: {
+                            id: true,
+                            name: true,
+                            cover: true,
+                            Projects: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    cover: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+    payload.teams = user.TeamMembers.map((teamMember) => {
+        const { Team } = teamMember;
+        return {
+            id: teamMember.teamId,
+            name: Team.name,
+            cover: teamMember.Team.cover,
+            role: teamMember.role,
+            status: teamMember.status,
+            projects: Team.Projects.map((project) => ({
+                name: project.name,
+                cover: project.cover,
+                id: project.id
+            }))
+        };
+    });
+    const token = await genToken(payload);
+    return {
+        data: {
+            token,
+            payload
+        }
+    };
+}
+      )(...values)
     }
-    if (code === 'fileCode2') {
-      import('/path2/demo.ts')
-        .then(m => {
-          m.signIn(...data)
-        })
+          if (code === 'fileCode2') {
+      const importData = await Promise.all([
+          import('@/services/auth/sign-in.f')
+            .then(m => m['formSchema']),
+          import('@/utils/facade-init')
+            .then(m => m['maPrisma']),
+          import('argon2')
+            .then(m => m['verify']),
+          import('@/services/func')
+            .then(m => m['genToken'])
+      ])
+      const values = [
+        ...data,
+        ...importData
+      ]
+      return (
+        async (values, formSchema, maPrisma, verify, genToken) => {
+    "use server";
+    formSchema.parse(values);
+    const { email, password } = values;
+    const user = await maPrisma().user.findFirst({
+        where: {
+            email
+        },
+        select: {
+            id: true,
+            email: true,
+            password: true
+        }
+    });
+    if (!user) {
+        return {
+            type: "error",
+            message: signInFailMessage,
+            data: null
+        };
     }
-`)
+    const isPasswordValid = await verify(user.password, password);
+    if (!isPasswordValid) {
+        return {
+            type: "error",
+            message: signInFailMessage,
+            data: null
+        };
+    }
+    const token = await genToken({
+        id: user.id,
+        email: user.email
+    });
+    return {
+        data: {
+            user,
+            token
+        }
+    };
+}
+      )(...values)
+    }
+      `)
   })
 })
