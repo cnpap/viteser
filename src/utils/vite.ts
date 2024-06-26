@@ -112,9 +112,9 @@ export function viteConfig(options: ViteserPluginOptions) {
         'viteser',
         'node:async_hooks',
       ]
-      if (config.build && config.build.rollupOptions && config.build.rollupOptions.external) {
+      if (config.build && config.build.rollupOptions && config.build.rollupOptions.external)
         external.push(...config.build.rollupOptions.external as string[])
-      }
+
       inlineConfig.build = {
         cssTarget: false,
         modulePreload: false,
