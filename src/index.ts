@@ -10,5 +10,4 @@ export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption 
   })
 }
 
-export * from './utils/server.ts'
-export * from './utils/hooks'
+export * from './utils'
