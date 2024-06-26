@@ -23,5 +23,12 @@ export default defineConfig(async () => {
 
       react(),
     ],
+    build: {
+      rollupOptions: {
+        external: [
+          'argon2',
+        ],
+      },
+    },
   })
 })

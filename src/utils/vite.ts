@@ -106,6 +106,15 @@ export function viteConfig(options: ViteserPluginOptions) {
     userConfig = config
     if (env.command === 'build') {
       const inlineConfig = await pluginProxy(config)
+      const external = [
+        'typescript',
+        'vite',
+        'viteser',
+        'node:async_hooks',
+      ]
+      if (config.build && config.build.rollupOptions && config.build.rollupOptions.external) {
+        external.push(...config.build.rollupOptions.external as string[])
+      }
       inlineConfig.build = {
         cssTarget: false,
         modulePreload: false,
@@ -114,12 +123,7 @@ export function viteConfig(options: ViteserPluginOptions) {
           entry: virmod,
         },
         rollupOptions: {
-          external: [
-            'typescript',
-            'vite',
-            'viteser',
-            'node:async_hooks',
-          ],
+          external,
           input: {
             api: virmod,
           },
@@ -127,11 +131,13 @@ export function viteConfig(options: ViteserPluginOptions) {
             {
               dir: 'dist-vs-api/esm',
               format: 'es',
+              exports: 'named',
               entryFileNames: '[name].mjs', // This will output `api.js` in the `dist` directory
             },
             {
               dir: 'dist-vs-api/cjs',
               format: 'cjs',
+              exports: 'named',
               entryFileNames: '[name].cjs', // This will output `api.js` in the `dist` directory
             },
           ],
@@ -144,7 +150,7 @@ export function viteConfig(options: ViteserPluginOptions) {
     await beforeInit()
     // eslint-disable-next-line node/prefer-global/process
     const rootPathname = process.cwd()
-    const modPathname = `file:///${rootPathname}/dist-vs-api/api.js`.replace(/\\/g, '/')
+    const modPathname = `file:///${rootPathname}/dist-vs-api/esm/api.mjs`.replace(/\\/g, '/')
     /* @vite-ignore */
     const app = await import(modPathname)
     server.middlewares.use('/vs/', async (req, res) => {
