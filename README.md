@@ -1,3 +1,5 @@
+把接口当作函数写在前端项目中
+
 ![banner.png](md/banner.png)
 
 [[ENGLISH](README-en.md)] [[中文](README.md)]
@@ -34,7 +36,7 @@ function App() {
 1. 安装 viteser 和其他依赖
 
 ```bash
-pnpm install viteser tsx
+npm install viteser
 ```
 
 2. 修改 vite.config.ts
@@ -51,12 +53,6 @@ export default defineConfig({
     // react() or vue() or other . . .
   ],
 })
-```
-
-3. 运行服务
-
-```bash
-npx tsx node_modules/vite/bin/vite.js
 ```
 
 #### 🔍 快速启动

@@ -1,3 +1,5 @@
+Write interfaces as functions in front-end projects
+
 ![banner.png](md/banner.png)
 
 [[ENGLISH](README-en.md)] [[中文](README.md)]
@@ -34,7 +36,7 @@ function App() {
 1. install viteser and other dependencies
 
 ```bash
-pnpm install viteser tsx
+npm install viteser
 ```
 
 2. modify vite.config.ts
@@ -51,12 +53,6 @@ export default defineConfig({
     // react() or vue() or other . . .
   ],
 })
-```
-
-3. run service
-
-```bash
-npx tsx node_modules/vite/bin/vite.js
 ```
 
 #### 🔍 quick start
