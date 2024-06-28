@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev2": "vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "proxy": "tsx src/api.ts",
