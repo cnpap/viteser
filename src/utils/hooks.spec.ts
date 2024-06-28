@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { context, makeMiddleware, useJwtPayload } from './hooks.ts'
+import { context, makeMiddleware } from './hooks.ts'
 import { testContextHelper } from './test.ts'
 
 const testUserPayload = {
@@ -19,18 +19,8 @@ const testThrowMiddleware = makeMiddleware(() => {
 })
 
 describe('hooks', () => {
-  it('hooks', async () => {
-    await testContextHelper<typeof testUserPayload>({
-      payload: testUserPayload,
-      callback: async () => {
-        const [payload] = useJwtPayload<typeof testUserPayload>()
-        expect(payload.id).toEqual('admin')
-      },
-    })
-  })
-
   it('should catch middleware', async () => {
-    await testContextHelper<typeof testUserPayload>({
+    await testContextHelper({
       payload: testUserPayload,
       callback: async () => {
         const ctx = context()

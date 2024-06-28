@@ -2,22 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist-vs-api/cjs/api.cjs",
+      "src": "playground/dist-vs-api/esm/api.mjs",
       "use": "@vercel/node"
     },
     {
-      "src": "dist/**",
+      "src": "playground/dist/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/vs/(.*)",
-      "dest": "dist-vs-api/cjs/api.cjs"
+      "dest": "/playground/dist-vs-api/esm/api.mjs"
     },
     {
       "src": "/(.*)",
-      "dest": "dist/$1"
+      "dest": "/playground/dist/$1"
     }
   ]
 }

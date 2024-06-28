@@ -76,14 +76,13 @@ export async function makeEntryCode(funcPayloads: FuncFileMapType) {
   return `
 import { serve } from 'viteser'
 
-const { fetch, app } = serve(
+const { fetch } = serve(
   async ({ code, data, ctx }) => {
 ${identifierCode}
   }
 )
 export {
   fetch,
-  app
 }
 
 export default fetch

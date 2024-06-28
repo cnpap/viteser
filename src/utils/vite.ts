@@ -109,7 +109,6 @@ export function viteConfig(options: ViteserPluginOptions) {
       const external = [
         'typescript',
         'vite',
-        'viteser',
         'node:async_hooks',
       ]
       if (config.build && config.build.rollupOptions && config.build.rollupOptions.external)
@@ -124,6 +123,9 @@ export function viteConfig(options: ViteserPluginOptions) {
           entry: virmod,
         },
         rollupOptions: {
+          treeshake: {
+            moduleSideEffects: false,
+          },
           external,
           input: {
             api: virmod,

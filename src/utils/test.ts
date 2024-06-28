@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
-import type { BaseContext } from 'koa'
-import type { HooksContext } from './hooks.ts'
+import type { AsyncHooksValueType, ViteserContext } from './hooks.ts'
 import { hooksStorage } from './hooks.ts'
 
 interface TestContextHelperOptions {
@@ -8,17 +7,19 @@ interface TestContextHelperOptions {
   callback: Function
 }
 
-export async function testContextHelper<T extends Record<string, any>>(options: TestContextHelperOptions) {
+export async function testContextHelper(options: TestContextHelperOptions) {
   const token = jwt.sign(options.payload, 'secret', {
     expiresIn: '3h',
   })
-  const store: HooksContext<T> = {
+  const store: AsyncHooksValueType = {
     jwt: options.payload,
     ctx: {
-      headers: {
-        authorization: `Bearer ${token}`,
+      req: {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       },
-    } as BaseContext,
+    } as ViteserContext,
   }
   await hooksStorage.run(
     store,

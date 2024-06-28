@@ -1,30 +1,29 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
-import type { BaseContext } from 'koa'
-import { decode } from 'jsonwebtoken'
-import { getTokenByHeaders } from './http.ts'
+import type { ServerResponse } from 'node:http'
+import type { VercelRequest } from '@vercel/node'
 
-export interface HooksContext<J extends Record<string, any>> {
-  ctx: BaseContext
-  jwt: J
+export type ViteserContext<T extends Record<string, any> = Record<string, any>> = {
+  req: VercelRequest
+  res: ServerResponse
+} & T
+
+export type ViteserJwtPayload = Record<string, any>
+
+export interface AsyncHooksValueType {
+  ctx: ViteserContext
+  jwt: ViteserJwtPayload
 }
 
-export const hooksStorage = new AsyncLocalStorage<HooksContext<any>>()
+export const hooksStorage = new AsyncLocalStorage<AsyncHooksValueType>()
 
 export function context() {
-  return hooksStorage.getStore()?.ctx as BaseContext
+  return hooksStorage.getStore()?.ctx as ViteserContext
 }
 
-export function useJwtPayload<T>(): [T, (v: T) => void] {
+export function useJwtPayload(): [ViteserJwtPayload, (p: ViteserJwtPayload) => void] {
   const jwtPayload = hooksStorage.getStore()?.jwt ?? {}
-  function setJwtPayload(p: any) {
+  function setJwtPayload(p: ViteserJwtPayload) {
     Object.assign(jwtPayload, p)
-  }
-  if (!jwtPayload) {
-    const ctx = context()
-    const token = getTokenByHeaders(ctx.headers)
-    const decodeValues = decode(token) as any
-    Object.assign(jwtPayload, decodeValues)
-    setJwtPayload(jwtPayload)
   }
   return [jwtPayload, setJwtPayload]
 }
@@ -32,6 +31,7 @@ export function useJwtPayload<T>(): [T, (v: T) => void] {
 export function makeMiddleware(func: Function) {
   return async () => {
     const ctx = context()
+
     let breakFlag = false
     try {
       const result = await func()
@@ -40,15 +40,18 @@ export function makeMiddleware(func: Function) {
        */
       if (result) {
         breakFlag = true
-        ctx.body = result
+        ctx.res.writeHead(200, { 'Content-Type': 'application/json' })
+        ctx.res.end(JSON.stringify(result))
       }
     }
     catch (e: any) {
       ctx.status = 500
-      ctx.body = {
+      console.error(e)
+      ctx.res.writeHead(500, { 'Content-Type': 'application/json' })
+      ctx.res.end(JSON.stringify({
         success: false,
-        message: e.message,
-      }
+        message: 'error, please check the log',
+      }))
       throw e
     }
 

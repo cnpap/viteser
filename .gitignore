@@ -23,3 +23,8 @@ dist-vs-api
 *.sln
 *.sw?
 cache
+
+.vercel
+demo*
+
+.vercel
