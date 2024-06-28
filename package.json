@@ -36,7 +36,8 @@
   "scripts": {
     "play": "pnpm -C playground run dev",
     "dev": "unbuild --stub",
-    "build": "unbuild && pnpm -C playground run build",
+    "build": "unbuild",
+    "build:all": "unbuild && pnpm -C playground run build",
     "stale": "stale-del -u",
     "test": "vitest",
     "ui": "vitest --ui",
