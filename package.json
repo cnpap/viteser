@@ -1,7 +1,7 @@
 {
   "name": "viteser",
   "type": "module",
-  "version": "0.0.1-beta.25",
+  "version": "0.0.1-beta.26",
   "packageManager": "pnpm@9.1.0",
   "description": "允许直接在 vite .vue .tsx .ts 前端文件中写接口",
   "author": "杨伟杰 <sia-fl@outlook.com>",
@@ -45,7 +45,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public"
+    "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public --no-git-checks"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.4",
