@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import type { PluginOption } from 'vite'
-import type { ViteserPluginOptions } from './types/type.ts'
+import type { ImportedObject, ViteserPluginOptions } from './types/type.ts'
 import { analyzeOption, analyzeUseServerNode, extractImports, removeAllImports, virtualSourceFile } from './utils/ast.ts'
 import { getCachePath } from './utils/path.ts'
 import { sha1 } from './utils/hash.ts'
@@ -41,6 +41,12 @@ export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
       const filename = dirs.pop()
       let positionDiff = 0
       for (const func of analyzedOptions.functions) {
+        // 通过 identifier 去重
+        const usedImports: Record<string, ImportedObject> = {}
+        func.usedImports.forEach((imp) => {
+          usedImports[imp.identifier] = imp
+        })
+        func.usedImports = Object.values(usedImports)
         /**
          * 将 id 中的 cwdPath 部分去掉
          */

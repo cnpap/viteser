@@ -20,6 +20,7 @@ import notImport from './notImport'
 const handle = async (a: number) => {
   "use server";
   console.log(demo03.name);
+  console.log(demo03.name);
   console.log(demo05);
   console.log(demo052.cc);
 }
