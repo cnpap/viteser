@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "react": "18.2",
-    "react-dom": "18.2"
+    "react-dom": "18.2",
+    "viteser": "^0.0.1-beta.26"
   },
   "devDependencies": {
     "@types/react": "18.2",

@@ -13,6 +13,9 @@ export default defineBuildConfig({
     'source-map-support',
   ],
   rollup: {
+    esbuild: {
+
+    },
     emitCJS: true,
     dts: {
       respectExternal: false,

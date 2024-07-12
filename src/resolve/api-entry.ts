@@ -1,5 +1,8 @@
 import path from 'node:path'
-import type { UseServerFunction } from '../types/type.ts'
+import fs from 'node:fs'
+import { format } from 'prettier'
+import type { UseServerFunction } from '../type.ts'
+import { getCachePath } from '../utils/helper.ts'
 
 export interface FuncFileType {
   id: string
@@ -73,12 +76,34 @@ ${imports}
 
 export async function makeEntryCode(funcPayloads: FuncFileMapType) {
   const identifierCode = await transEntryIdentifier(funcPayloads)
-  return `
-import { serve } from 'viteser'
+  const code = `
+import { serve, contextLocalStorage, context } from 'viteser'
 
 const { fetch } = serve(
-  async ({ code, data, ctx }) => {
-${identifierCode}
+  async ({ code, data, req, res }) => {
+    const __ctx__ = {
+      req,
+      res,
+      result: {
+        code: 200,
+        data: {},
+      },
+    }
+    const values = await contextLocalStorage
+      .run({
+        ctx: __ctx__,
+        jwt: {}
+      }, async () => {
+        ${identifierCode}
+      })
+    if (values) {
+      __ctx__.result.data = values
+    }
+    res.writeHead(__ctx__.result.code, { 'Content-Type': 'application/json' })
+    res.end(JSON.stringify({
+      success: true,
+      data: __ctx__.result.data,
+    }))
   }
 )
 export {
@@ -87,4 +112,14 @@ export {
 
 export default fetch
   `
+  const prettierCode = await format(code, {
+    semi: true,
+    singleQuote: true,
+    trailingComma: 'all',
+    parser: 'typescript',
+  })
+  const cachePath = getCachePath()
+  const entryPath = path.resolve(cachePath, 'entry.ts')
+  fs.writeFileSync(entryPath, prettierCode)
+  return code
 }

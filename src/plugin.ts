@@ -2,18 +2,16 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import type { PluginOption } from 'vite'
-import type { ImportedObject, ViteserPluginOptions } from './types/type.ts'
-import { analyzeOption, analyzeUseServerNode, extractImports, removeAllImports, virtualSourceFile } from './utils/ast.ts'
-import { getCachePath } from './utils/path.ts'
-import { sha1 } from './utils/hash.ts'
+import type { ImportedObject, ViteserPluginOptions } from './type.ts'
+import { analyzeOption, analyzeUseServerNode, extractImports, removeAllImports, virtualSourceFile } from './resolve/ast.ts'
 import { viteConfig } from './utils/vite.ts'
-import { trimQMark } from './utils/str.ts'
+import { getCacheFunctions } from './utils/helper.ts'
+import { sha1, trimQMark } from './utils/str.ts'
 
 export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
-  const cachePath = getCachePath()
-  const cwdPath = path.resolve(process.cwd())
   const { fetchTemplate, ...confRest } = viteConfig(options)
-
+  const cachePath = getCacheFunctions()
+  const cwdPath = path.resolve(process.cwd())
   return {
     name: 'viteser',
     ...confRest,

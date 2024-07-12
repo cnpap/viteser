@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import ts from 'typescript'
-import type { AnalyzedOptions, ImportedObject, UseServerFunction } from '../types/type.ts'
+import type { AnalyzedOptions, ImportedObject, UseServerFunction } from '../type.ts'
 import { pluginPack } from '../plugin.ts'
 import { analyzeUseServerNode, extractImports, findPipeAssignments, removeAllImports } from './ast.ts'
 
@@ -64,7 +64,7 @@ function ReactComponent() {
       /**
        * 读取 ./codetxt/sign-in.txt 文件内容
        */
-      const sourceCode = fs.readFileSync(path.resolve('src/codetxt/sign-in.txt')).toString()
+      const sourceCode = fs.readFileSync(path.resolve('src/resolve/codetxt/sign-in.txt')).toString()
       const result = await (pluginPack() as any)?.transform(sourceCode, 'src/codetxt/sign-in.ts')
       expect(result).contain('export async function signIn')
       expect(result).contain('-sign-in-signIn\'')
@@ -98,7 +98,7 @@ const accc = pipe(zodResolver(z.object({
   it(
     'remove all import statements',
     () => {
-      const sourceCode = fs.readFileSync(path.resolve('src/codetxt/sign-in.txt')).toString()
+      const sourceCode = fs.readFileSync(path.resolve('src/resolve/codetxt/sign-in.txt')).toString()
       const sourceFile = ts.createSourceFile(
         'example.ts',
         sourceCode,

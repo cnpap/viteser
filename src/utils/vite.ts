@@ -1,21 +1,21 @@
 import fs from 'node:fs'
-import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { ConfigEnv, InlineConfig, PreviewServerHook, ServerHook, UserConfig, ViteDevServer } from 'vite'
-import { build, createServer } from 'vite'
-import type { UseServerFunction, ViteserPluginOptions } from '../types/type.ts'
+import { build } from 'vite'
+import type { UseServerFunction, ViteserPluginOptions } from '../type.ts'
 import { fetchTemplete } from '../fetch-templates/fetch.ts'
 import { axiosTemplate } from '../fetch-templates/axios.ts'
-import { makeEntryCode } from '../api-entry'
-import { getCachePath } from './path.ts'
+import { makeEntryCode } from '../resolve/api-entry.ts'
+import { getCacheFunctions } from './helper.ts'
+import { apiProxy } from './serve.ts'
 
 type ObjectHook<T, O = NonNullable<unknown>> = T | ({ handler: T, order?: 'pre' | 'post' | null } & O)
 
 type TemplateMaker = (funcname: string, funcCode: string) => string
 
-const virmod = 'virtual:__viteser.ts'
+export const virmod = 'virtual:__viteser.ts'
 
 export async function pluginProxy(c: UserConfig): Promise<InlineConfig> {
-  const cachePath = getCachePath()
+  const cachePath = getCacheFunctions()
   /**
    * 获取文件夹下所有文件
    */
@@ -72,20 +72,6 @@ export async function pluginProxy(c: UserConfig): Promise<InlineConfig> {
   }
 }
 
-export async function apiProxy(c: UserConfig) {
-  const viteServer = await createServer(await pluginProxy(c))
-
-  const serveModule = await viteServer.ssrLoadModule(virmod)
-  if (serveModule && serveModule.fetch)
-    return serveModule.fetch
-
-  return {
-    fetch: (_: IncomingMessage, res: ServerResponse) => {
-      res.end('viteser is not ready')
-    },
-  }
-}
-
 type ConfigType = ObjectHook<(this: void, config: UserConfig, env: ConfigEnv) => Omit<UserConfig, 'plugins'> | null | void | Promise<Omit<UserConfig, 'plugins'> | null | void>>
 
 /**
@@ -94,16 +80,45 @@ type ConfigType = ObjectHook<(this: void, config: UserConfig, env: ConfigEnv) =>
  * @param options
  */
 export function viteConfig(options: ViteserPluginOptions) {
-  const cachePath = getCachePath()
-  if (!fs.existsSync(cachePath))
+  const cachePath = getCacheFunctions()
+  if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath, { recursive: true })
+  }
+  else {
+    fs.readdirSync(cachePath).forEach((file) => {
+      fs.unlinkSync(`${cachePath}/${file}`)
+    })
+  }
   let fetchTemplate: TemplateMaker = fetchTemplete
   if (options.fetchTool === 'axios')
     fetchTemplate = axiosTemplate
   const beforeInit = options.beforeInit ?? (async () => { })
   let userConfig: UserConfig = null as unknown as UserConfig
+  let configEnv: ConfigEnv = null as unknown as ConfigEnv
   const config: ConfigType = async (config, env) => {
     userConfig = config
+    configEnv = env
+  }
+  const configurePreviewServer: ObjectHook<PreviewServerHook> = async (server) => {
+    await beforeInit()
+    // eslint-disable-next-line node/prefer-global/process
+    const rootPathname = process.cwd()
+    const modPathname = `file:///${rootPathname}/dist-vs-api/esm/api.mjs`.replace(/\\/g, '/')
+    const app = await import(/* @vite-ignore */modPathname)
+    server.middlewares.use('/vs/', async (req, res) => {
+      await app.fetch(req, res)
+    })
+  }
+  const configureServer: ObjectHook<ServerHook> = async (server: ViteDevServer) => {
+    await beforeInit()
+    server.middlewares.use('/vs/', async (req, res) => {
+      const mod = await apiProxy(userConfig) as any
+      await mod(req, res)
+    })
+  }
+  const buildEnd = async () => {
+    const config = userConfig
+    const env = configEnv
     if (env.command === 'build') {
       const inlineConfig = await pluginProxy(config)
       const external = [
@@ -149,26 +164,9 @@ export function viteConfig(options: ViteserPluginOptions) {
       await build(inlineConfig)
     }
   }
-  const configurePreviewServer: ObjectHook<PreviewServerHook> = async (server) => {
-    await beforeInit()
-    // eslint-disable-next-line node/prefer-global/process
-    const rootPathname = process.cwd()
-    const modPathname = `file:///${rootPathname}/dist-vs-api/esm/api.mjs`.replace(/\\/g, '/')
-    /* @vite-ignore */
-    const app = await import(modPathname)
-    server.middlewares.use('/vs/', async (req, res) => {
-      app.fetch(req, res)
-    })
-  }
-  const configureServer: ObjectHook<ServerHook> = async (server: ViteDevServer) => {
-    await beforeInit()
-    server.middlewares.use('/vs/', async (req, res) => {
-      const mod = await apiProxy(userConfig) as any
-      mod(req, res)
-    })
-  }
   return {
     fetchTemplate,
+    buildEnd,
     config,
     configureServer,
     configurePreviewServer,

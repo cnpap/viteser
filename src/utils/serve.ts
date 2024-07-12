@@ -1,6 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { VercelRequest } from '@vercel/node'
-import { hooksStorage } from './hooks.ts'
+import type { UserConfig } from 'vite'
+import { createServer } from 'vite'
+import { pluginProxy, virmod } from './vite.ts'
 
 function hybridBodyParser(req: IncomingMessage) {
   return new Promise((resolve, reject) => {
@@ -25,23 +27,11 @@ export function serve(next: (p: Record<string, any>) => Promise<void>) {
         if (!(req as VercelRequest).body)
           (req as VercelRequest).body = await hybridBodyParser(req)
         const { data, code } = (req as VercelRequest).body
-        const ctx = {
-          req: req as VercelRequest,
-          res,
-        }
-
-        await hooksStorage.run({ ctx, jwt: {} }, async () => {
-          const resData = await next({ code, data, ctx })
-          res.writeHead(200, { 'Content-Type': 'application/json' })
-          res.end(JSON.stringify({
-            success: true,
-            data: resData,
-          }))
-        })
+        return next({ data, code, req, res })
       }
       catch (error) {
-        res.writeHead(500, { 'Content-Type': 'application/json' })
         console.error(error)
+        res.writeHead(500, { 'Content-Type': 'application/json' })
         res.end(JSON.stringify({ success: false, error: 'error, please check the log' }))
       }
     }
@@ -49,5 +39,19 @@ export function serve(next: (p: Record<string, any>) => Promise<void>) {
 
   return {
     fetch,
+  }
+}
+
+export async function apiProxy(c: UserConfig) {
+  const viteServer = await createServer(await pluginProxy(c))
+
+  const serveModule = await viteServer.ssrLoadModule(virmod)
+  if (serveModule && serveModule.fetch)
+    return serveModule.fetch
+
+  return {
+    fetch: (_: IncomingMessage, res: ServerResponse) => {
+      res.end('viteser is not ready')
+    },
   }
 }

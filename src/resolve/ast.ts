@@ -1,6 +1,6 @@
 import type { Block, FunctionBody, ParameterDeclaration } from 'typescript'
 import ts from 'typescript'
-import type { AnalyzedOptions, ImportedObject, UseServerFunction, UseServerParams } from '../types/type.ts'
+import type { AnalyzedOptions, ImportedObject, UseServerFunction, UseServerParams } from '../type.ts'
 
 export function removeAllImports(node: ts.Node): string {
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
@@ -18,6 +18,7 @@ export function removeAllImports(node: ts.Node): string {
   return resultText
 }
 
+// noinspection JSUnusedGlobalSymbols
 export function compileTypeScript(code: string) {
   const compilerOptions = {
     module: ts.ModuleKind.CommonJS,

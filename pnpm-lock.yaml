@@ -14,6 +14,9 @@ importers:
       hono:
         specifier: ^4.4.7
         version: 4.4.7
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.2
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
@@ -78,6 +81,9 @@ importers:
       react-dom:
         specifier: '18.2'
         version: 18.2.0(react@18.2.0)
+      viteser:
+        specifier: ^0.0.1-beta.26
+        version: link:..
     devDependencies:
       '@types/react':
         specifier: '18.2'
@@ -3010,6 +3016,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-bytes@6.1.1:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
@@ -6664,6 +6675,8 @@ snapshots:
       source-map-js: 1.2.0
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.3.2: {}
 
   pretty-bytes@6.1.1: {}
 

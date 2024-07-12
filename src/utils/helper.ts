@@ -1,3 +1,4 @@
+import type { IncomingHttpHeaders } from 'node:http'
 import fs from 'node:fs'
 
 function getNodeModulesPath() {
@@ -39,11 +40,33 @@ function getNodeModulesPath() {
 
 let cachePath: string = ''
 
+export function getCacheFunctions() {
+  if (cachePath)
+    return `${cachePath}/vs`
+  getCachePath()
+  return `${cachePath}/vs`
+}
+
 export function getCachePath() {
   if (cachePath)
     return cachePath
-
-  const nodeModulesPath = getNodeModulesPath()
-  cachePath = `${nodeModulesPath}/.cache/vs`
+  cachePath = `${getNodeModulesPath()}/.cache`
   return cachePath
+}
+
+// noinspection JSUnusedGlobalSymbols
+/**
+ * 从 headers 中获取 token
+ *
+ * @param headers
+ */
+export function getTokenByHeaders(headers: IncomingHttpHeaders) {
+  const authorization
+    = headers.authorization || headers.Authorization || ''
+  const token = (authorization as string).replace('Bearer ', '')
+  if (!token) {
+    // noinspection ExceptionCaughtLocallyJS
+    throw new Error('Token is required')
+  }
+  return token
 }

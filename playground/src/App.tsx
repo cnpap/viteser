@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { info } from './data'
-
-async function boom(w: string) {
-  'use server'
-  return `${w} ${info.version}`
-}
+import { boom } from './service'
 
 export default function App() {
   const [text, setText] = useState('')
   useEffect(() => {
-    boom(`Hello ${info.name}`).then(setText)
+    boom(`Hello ${info.name}`).then((res) => {
+      setText(res)
+    })
   }, [])
   return (
     <div>

@@ -50,6 +50,7 @@
   "dependencies": {
     "@hono/node-server": "^1.11.4",
     "hono": "^4.4.7",
+    "prettier": "^3.3.2",
     "tsup": "^8.0.2"
   },
   "devDependencies": {
