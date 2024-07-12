@@ -77,7 +77,7 @@ ${imports}
 export async function makeEntryCode(funcPayloads: FuncFileMapType) {
   const identifierCode = await transEntryIdentifier(funcPayloads)
   const code = `
-import { serve, contextLocalStorage, context } from 'viteser'
+import { serve, contextLocalStorage } from 'viteser'
 
 const { fetch } = serve(
   async ({ code, data, req, res }) => {

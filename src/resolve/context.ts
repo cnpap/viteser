@@ -16,11 +16,11 @@ export interface AsyncHooksValueType {
 
 export const contextLocalStorage = new AsyncLocalStorage<AsyncHooksValueType>()
 
-export function context() {
+export function getContext() {
   return contextLocalStorage.getStore()?.ctx as ViteserContext
 }
 
-export function payload(): [ViteserJwtPayload, (p: ViteserJwtPayload) => void] {
+export function getPayload(): [ViteserJwtPayload, (p: ViteserJwtPayload) => void] {
   const jwtPayload = contextLocalStorage.getStore()?.jwt ?? {}
   function setJwtPayload(p: ViteserJwtPayload) {
     Object.assign(jwtPayload, p)
