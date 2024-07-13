@@ -1,8 +1,8 @@
+// noinspection JSUnusedGlobalSymbols
+
+import { AsyncLocalStorage } from 'node:async_hooks'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { VercelRequest } from '@vercel/node'
-import type { UserConfig } from 'vite'
-import { createServer } from 'vite'
-import { pluginProxy, virmod } from './vite.ts'
 
 function hybridBodyParser(req: IncomingMessage) {
   return new Promise((resolve, reject) => {
@@ -42,16 +42,45 @@ export function serve(next: (p: Record<string, any>) => Promise<void>) {
   }
 }
 
-export async function apiProxy(c: UserConfig) {
-  const viteServer = await createServer(await pluginProxy(c))
+export type ViteserContext<T extends Record<string, any> = Record<string, any>> = {
+  req: VercelRequest
+  res: ServerResponse
+} & T
 
-  const serveModule = await viteServer.ssrLoadModule(virmod)
-  if (serveModule && serveModule.fetch)
-    return serveModule.fetch
+export type ViteserJwtPayload = Record<string, any>
 
-  return {
-    fetch: (_: IncomingMessage, res: ServerResponse) => {
-      res.end('viteser is not ready')
-    },
+export interface AsyncHooksValueType {
+  ctx: ViteserContext
+  jwt: ViteserJwtPayload
+}
+
+export const contextLocalStorage = new AsyncLocalStorage<AsyncHooksValueType>()
+
+export function getContext() {
+  return contextLocalStorage.getStore()?.ctx as ViteserContext
+}
+
+export function getPayload(): [ViteserJwtPayload, (p: ViteserJwtPayload) => void] {
+  const jwtPayload = contextLocalStorage.getStore()?.jwt ?? {}
+  function setJwtPayload(p: ViteserJwtPayload) {
+    Object.assign(jwtPayload, p)
   }
+  return [jwtPayload, setJwtPayload]
+}
+
+export async function response<T>(data: T, code: number = 200, headers: Record<string, string> | null = null): Promise<T> {
+  const ctx = getContext()
+  if (headers) {
+    for (const key in headers)
+      ctx.res.setHeader(key, headers[key])
+  }
+  const result = ctx.result as {
+    code: number
+    data: T
+  }
+  Object.assign(result, {
+    code,
+    data,
+  })
+  return data
 }

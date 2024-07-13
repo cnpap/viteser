@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'node:fs'
 import { format } from 'prettier'
 import type { UseServerFunction } from '../type.ts'
-import { getCachePath } from '../utils/helper.ts'
+import { getCachePath } from './helper.ts'
 
 export interface FuncFileType {
   id: string
@@ -17,7 +17,7 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
     const funcPayload = funcPayloads[fileCode]
     // 去除后缀名
     const pureFileCode = fileCode.replace(/\.\w+$/, '')
-    if (pureFileCode.endsWith('.ts')) {
+    if (funcPayload.id.endsWith('.ts')) {
       code += `\
     if (code === '${pureFileCode}') {
       return import('${funcPayload.id}')
@@ -77,7 +77,7 @@ ${imports}
 export async function makeEntryCode(funcPayloads: FuncFileMapType) {
   const identifierCode = await transEntryIdentifier(funcPayloads)
   const code = `
-import { serve, contextLocalStorage } from 'viteser'
+import { serve, contextLocalStorage } from 'viteser/util'
 
 const { fetch } = serve(
   async ({ code, data, req, res }) => {

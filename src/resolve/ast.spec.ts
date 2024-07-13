@@ -3,7 +3,7 @@ import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import ts from 'typescript'
 import type { AnalyzedOptions, ImportedObject, UseServerFunction } from '../type.ts'
-import { pluginPack } from '../plugin.ts'
+import { pluginPack } from './plugin.ts'
 import { analyzeUseServerNode, extractImports, findPipeAssignments, removeAllImports } from './ast.ts'
 
 describe('should', () => {

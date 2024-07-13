@@ -4,6 +4,7 @@ import { defineBuildConfig } from 'unbuild'
 export default defineBuildConfig({
   entries: [
     'src/index',
+    'src/util',
   ],
   clean: true,
   declaration: true,
@@ -13,9 +14,6 @@ export default defineBuildConfig({
     'source-map-support',
   ],
   rollup: {
-    esbuild: {
-
-    },
     emitCJS: true,
     dts: {
       respectExternal: false,

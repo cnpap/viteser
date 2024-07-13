@@ -22,7 +22,11 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./*": "./*"
+    "./util": {
+      "types": "./dist/util.d.ts",
+      "import": "./dist/util.mjs",
+      "require": "./dist/util.cjs"
+    }
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",

@@ -1,4 +1,4 @@
-import { responseJson } from 'viteser'
+import { response } from 'viteser/util'
 import { info } from './data'
 
 export async function a(name: string) {
@@ -11,5 +11,5 @@ export async function a(name: string) {
 
 export async function boom(w: string) {
   'use server'
-  return responseJson(`${w} ${info.version}`, 201)
+  return response(`${w} ${info.version}`, 201)
 }

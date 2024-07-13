@@ -1,7 +1,6 @@
 import type { PluginOption } from 'vite'
 import type { ViteserPluginOptions } from './type.ts'
-import { pluginPack } from './plugin'
-import { serve } from './utils/serve.ts'
+import { pluginPack } from './resolve/plugin.ts'
 
 // noinspection JSUnusedGlobalSymbols
 export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption {
@@ -12,8 +11,4 @@ export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption 
   })
 }
 
-export * from './utils/response.ts'
-export * from './utils/helper.ts'
-export * from './resolve/context.ts'
-
-export { serve }
+export * from './resolve/helper.ts'

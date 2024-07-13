@@ -1,12 +1,12 @@
 import fs from 'node:fs'
+import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { ConfigEnv, InlineConfig, PreviewServerHook, ServerHook, UserConfig, ViteDevServer } from 'vite'
-import { build } from 'vite'
+import { build, createServer } from 'vite'
 import type { UseServerFunction, ViteserPluginOptions } from '../type.ts'
-import { fetchTemplete } from '../fetch-templates/fetch.ts'
-import { axiosTemplate } from '../fetch-templates/axios.ts'
-import { makeEntryCode } from '../resolve/api-entry.ts'
+import { fetchTemplete } from './fetch-templates/fetch.ts'
+import { axiosTemplate } from './fetch-templates/axios.ts'
+import { makeEntryCode } from './api-entry.ts'
 import { getCacheFunctions } from './helper.ts'
-import { apiProxy } from './serve.ts'
 
 type ObjectHook<T, O = NonNullable<unknown>> = T | ({ handler: T, order?: 'pre' | 'post' | null } & O)
 
@@ -74,6 +74,27 @@ export async function pluginProxy(c: UserConfig): Promise<InlineConfig> {
 
 type ConfigType = ObjectHook<(this: void, config: UserConfig, env: ConfigEnv) => Omit<UserConfig, 'plugins'> | null | void | Promise<Omit<UserConfig, 'plugins'> | null | void>>
 
+let oldServer: ViteDevServer | null = null
+
+export async function apiProxy(c: UserConfig) {
+  const viteServer = await createServer(await pluginProxy(c))
+
+  if (oldServer)
+    await oldServer.close()
+
+  oldServer = viteServer
+
+  const serveModule = await viteServer.ssrLoadModule(virmod)
+  if (serveModule && serveModule.fetch)
+    return serveModule.fetch
+
+  return {
+    fetch: (_: IncomingMessage, res: ServerResponse) => {
+      res.end('viteser is not ready')
+    },
+  }
+}
+
 /**
  * 收集 vite 配置信息
  *
@@ -139,7 +160,7 @@ export function viteConfig(options: ViteserPluginOptions) {
         },
         rollupOptions: {
           treeshake: {
-            moduleSideEffects: false,
+            // moduleSideEffects: false,
           },
           external,
           input: {

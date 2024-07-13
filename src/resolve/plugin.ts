@@ -2,11 +2,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import type { PluginOption } from 'vite'
-import type { ImportedObject, ViteserPluginOptions } from './type.ts'
-import { analyzeOption, analyzeUseServerNode, extractImports, removeAllImports, virtualSourceFile } from './resolve/ast.ts'
-import { viteConfig } from './utils/vite.ts'
-import { getCacheFunctions } from './utils/helper.ts'
-import { sha1, trimQMark } from './utils/str.ts'
+import type { ImportedObject, ViteserPluginOptions } from '../type.ts'
+import { analyzeOption, analyzeUseServerNode, extractImports, removeAllImports, virtualSourceFile } from './ast.ts'
+import { viteConfig } from './vite.ts'
+import { getCacheFunctions, sha1, trimQMark } from './helper.ts'
 
 export function pluginPack(options: ViteserPluginOptions = {}): PluginOption {
   const { fetchTemplate, ...confRest } = viteConfig(options)
