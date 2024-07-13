@@ -1,4 +1,4 @@
-import { response } from 'viteser/util'
+import { response } from 'viteser/dist/util'
 import { info } from './data'
 
 export async function a(name: string) {

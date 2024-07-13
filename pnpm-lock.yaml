@@ -82,7 +82,7 @@ importers:
         specifier: '18.2'
         version: 18.2.0(react@18.2.0)
       viteser:
-        specifier: ^0.0.1-beta.28
+        specifier: ^0.0.1-beta.29
         version: link:..
     devDependencies:
       '@types/react':
