@@ -20,6 +20,9 @@ importers:
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+      viteser:
+        specifier: ^0.0.1-beta.29
+        version: 0.0.1-beta.30(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.13.3
@@ -83,7 +86,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       viteser:
         specifier: ^0.0.1-beta.29
-        version: link:..
+        version: 0.0.1-beta.30(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
     devDependencies:
       '@types/react':
         specifier: '18.2'
@@ -3576,6 +3579,10 @@ packages:
       terser:
         optional: true
 
+  viteser@0.0.1-beta.30:
+    resolution: {integrity: sha512-+odMSxbDT0FoatJO/bzXyfHBjYhG3N4wtcYJh1vJVgXnDX9EXBJZmb8nnQHwvtHVy1dTiVQ+5qGS/Ay3dSOwGA==}
+    engines: {node: '>=v14.21.3'}
+
   vitest@1.5.0:
     resolution: {integrity: sha512-d8UKgR0m2kjdxDWX6911uwxout6GHS0XaGH1cksSIVVG8kRlE7G7aBw7myKQCvDI5dT4j7ZMa+l706BIORMDLw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -3808,7 +3815,7 @@ snapshots:
   '@babel/generator@7.23.0':
     dependencies:
       '@babel/types': 7.23.0
-      '@jridgewell/gen-mapping': 0.3.3
+      '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.19
       jsesc: 2.5.2
 
@@ -4276,7 +4283,7 @@ snapshots:
       debug: 4.3.4(supports-color@5.5.0)
       espree: 9.6.1
       globals: 13.24.0
-      ignore: 5.2.4
+      ignore: 5.3.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       minimatch: 3.1.2
@@ -7246,6 +7253,20 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.12.7
       fsevents: 2.3.3
+
+  viteser@0.0.1-beta.30(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5):
+    dependencies:
+      '@hono/node-server': 1.11.4
+      hono: 4.4.7
+      prettier: 3.3.2
+      tsup: 8.0.2(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+    transitivePeerDependencies:
+      - '@microsoft/api-extractor'
+      - '@swc/core'
+      - postcss
+      - supports-color
+      - ts-node
+      - typescript
 
   vitest@1.5.0(@edge-runtime/vm@3.2.0)(@types/node@20.12.7)(@vitest/ui@1.5.0):
     dependencies:
