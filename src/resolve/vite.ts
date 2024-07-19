@@ -77,10 +77,12 @@ type ConfigType = ObjectHook<(this: void, config: UserConfig, env: ConfigEnv) =>
 let oldServer: ViteDevServer | null = null
 
 export async function apiProxy(c: UserConfig) {
-  const viteServer = await createServer(await pluginProxy(c))
+  let viteServer: ViteDevServer
 
   if (oldServer)
-    await oldServer.close()
+    viteServer = oldServer
+  else
+    viteServer = await createServer(await pluginProxy(c))
 
   oldServer = viteServer
 
@@ -113,7 +115,8 @@ export function viteConfig(options: ViteserPluginOptions) {
   let fetchTemplate: TemplateMaker = fetchTemplete
   if (options.fetchTool === 'axios')
     fetchTemplate = axiosTemplate
-  const beforeInit = options.beforeInit ?? (async () => { })
+  const beforeInit = options.beforeInit ?? (async () => {
+  })
   let userConfig: UserConfig = null as unknown as UserConfig
   let configEnv: ConfigEnv = null as unknown as ConfigEnv
   const config: ConfigType = async (config, env) => {
