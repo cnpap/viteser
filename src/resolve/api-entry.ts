@@ -89,16 +89,18 @@ const { fetch } = serve(
         data: {},
       },
     }
-    const values = await contextLocalStorage
-      .run({
-        ctx: __ctx__,
-        jwt: {}
-      }, async () => {
-        ${identifierCode}
-      })
-    if (values) {
-      __ctx__.result.data = values
-    }
+    try {
+      const values = await contextLocalStorage
+        .run({
+          ctx: __ctx__,
+          jwt: {}
+        }, async () => {
+          ${identifierCode}
+        })
+      if (values) {
+        __ctx__.result.data = values
+      }
+    } catch (e) {}
     res.writeHead(__ctx__.result.code, { 'Content-Type': 'application/json' })
     res.end(JSON.stringify({
       success: true,
