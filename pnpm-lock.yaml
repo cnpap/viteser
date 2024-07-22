@@ -85,8 +85,8 @@ importers:
         specifier: '18.2'
         version: 18.2.0(react@18.2.0)
       viteser:
-        specifier: ^0.0.1-beta.29
-        version: 0.0.1-beta.30(postcss@8.4.38)(ts-node@10.9.1(@types/node@20.12.7)(typescript@5.4.5))(typescript@5.4.5)
+        specifier: ^0.0.1-beta.32
+        version: link:..
     devDependencies:
       '@types/react':
         specifier: '18.2'

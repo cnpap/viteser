@@ -29,6 +29,12 @@ export function compileTypeScript(code: string) {
   return output.outputText
 }
 
+/**
+ * 分析所有 imports
+ *
+ * @param node
+ * @param importsMap
+ */
 export function extractImports(node: ts.Node, importsMap: Record<string, ImportedObject>) {
   if (ts.isImportDeclaration(node)) {
     const moduleName = node.moduleSpecifier.getText(node.getSourceFile()).replace(/['"]/g, '')
@@ -183,6 +189,58 @@ export function findPipeAssignments(node: ts.Node) {
   return assignments
 }
 
+/**
+ * 检查文件是否有导出
+ *
+ * @param node
+ * @param exportName
+ */
+export function checkForExport(node: ts.Node, exportName: string): boolean {
+  let hasExport = false
+
+  function visit(node: ts.Node) {
+    if (ts.isExportDeclaration(node) && node.exportClause && ts.isNamedExports(node.exportClause)) {
+      for (const element of node.exportClause.elements) {
+        if (element.name.getText() === exportName) {
+          hasExport = true
+          return
+        }
+      }
+    }
+    else if (ts.isVariableStatement(node) && node.modifiers?.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword)) {
+      for (const declaration of node.declarationList.declarations) {
+        if (declaration.name.getText() === exportName) {
+          hasExport = true
+          return
+        }
+      }
+    }
+    else if (ts.isFunctionDeclaration(node) && node.modifiers?.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword)) {
+      if (node.name && node.name.getText() === exportName) {
+        hasExport = true
+        return
+      }
+    }
+    else if (ts.isClassDeclaration(node) && node.modifiers?.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword)) {
+      if (node.name && node.name.getText() === exportName) {
+        hasExport = true
+        return
+      }
+    }
+    ts.forEachChild(node, visit)
+  }
+
+  ts.forEachChild(node, visit)
+
+  return hasExport
+}
+
+/**
+ * 创建虚拟文件
+ *
+ * @param id
+ * @param code
+ */
 export function virtualSourceFile(id: string, code: string) {
   return ts.createSourceFile(
     id,

@@ -6,7 +6,8 @@ import { getCachePath } from './helper.ts'
 
 export interface FuncFileType {
   id: string
-  func: UseServerFunction
+  name: string
+  func?: UseServerFunction
 }
 
 export type FuncFileMapType = Record<string, FuncFileType>
@@ -21,13 +22,19 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
       code += `\
     if (code === '${pureFileCode}') {
       return import('${funcPayload.id}')
-        .then(m => {
-          return m.${funcPayload.func.name}(...data)
+        .then(async m => {
+          if (m.before) {
+            await m.before()
+          }
+          return m.${funcPayload.name}(...data)
         })
     }
 `
     }
     else {
+      if (!funcPayload.func)
+        throw new Error('not found funcPayload.func')
+
       const dataParams = funcPayload
         .func
         .params
@@ -40,9 +47,9 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
         .func
         .usedImports
         .map((u) => {
-          let mKey = u.identifier
+          let moduleKey = u.identifier
           if (u.type === 'default')
-            mKey = 'default'
+            moduleKey = 'default'
 
           if (u.moduleName.startsWith('.')) {
             const dir = path.dirname(funcPayload.id)
@@ -51,7 +58,7 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
           }
           return `\
           import('${u.moduleName}')
-            .then(m => m['${mKey}'])`
+            .then(m => m['${moduleKey}'])`
         })
         .join(',\n')
       code += `\

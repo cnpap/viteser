@@ -4,9 +4,26 @@ import { describe, expect, it } from 'vitest'
 import ts from 'typescript'
 import type { AnalyzedOptions, ImportedObject, UseServerFunction } from '../type.ts'
 import { pluginPack } from './plugin.ts'
-import { analyzeUseServerNode, extractImports, findPipeAssignments, removeAllImports } from './ast.ts'
+import { analyzeUseServerNode, checkForExport, extractImports, findPipeAssignments, removeAllImports } from './ast.ts'
 
 describe('should', () => {
+  it('check for export', () => {
+    const sourceCode = `
+export const a = 123
+export async function b() {
+  'use server'
+}
+`
+    const sourceFile = ts.createSourceFile(
+      'example.ts',
+      sourceCode,
+      ts.ScriptTarget.ESNext,
+      true,
+    )
+    expect(checkForExport(sourceFile, 'a')).toBeTruthy()
+    expect(checkForExport(sourceFile, 'b')).toBeTruthy()
+  })
+
   it(
     'extract imports from source code',
     () => {
@@ -17,7 +34,7 @@ import { demo052 } from '@/demo05'
 import * as demo05 from '../demo05'
 import notImport from './notImport'
 
-const handle = async (a: number) => {
+export const handle = async (a: number) => {
   "use server";
   console.log(demo03.name);
   console.log(demo03.name);

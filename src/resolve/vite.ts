@@ -2,9 +2,10 @@ import fs from 'node:fs'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { ConfigEnv, InlineConfig, PreviewServerHook, ServerHook, UserConfig, ViteDevServer } from 'vite'
 import { build, createServer } from 'vite'
-import type { UseServerFunction, ViteserPluginOptions } from '../type.ts'
+import type { ViteserPluginOptions } from '../type.ts'
 import { fetchTemplete } from './fetch-templates/fetch.ts'
 import { axiosTemplate } from './fetch-templates/axios.ts'
+import type { FuncFileType } from './api-entry.ts'
 import { makeEntryCode } from './api-entry.ts'
 import { getCacheFunctions } from './helper.ts'
 
@@ -23,20 +24,14 @@ export async function pluginProxy(c: UserConfig): Promise<InlineConfig> {
   /**
    * 序列化所有文件
    */
-  const funcPayloads: Record<string, {
-    id: string
-    func: UseServerFunction
-  }> = {}
+  const funcPayloads: Record<string, FuncFileType> = {}
   for (const filename of filenames) {
     const funcPayload = fs.readFileSync(`${
       cachePath
     }/${
       filename
     }`).toString()
-    funcPayloads[filename] = JSON.parse(funcPayload) as {
-      id: string
-      func: UseServerFunction
-    }
+    funcPayloads[filename] = JSON.parse(funcPayload) as FuncFileType
   }
 
   return {
@@ -142,8 +137,7 @@ export function viteConfig(options: ViteserPluginOptions) {
   }
   const buildEnd = async () => {
     const config = userConfig
-    const env = configEnv
-    if (env.command === 'build') {
+    if (configEnv.command === 'build') {
       const inlineConfig = await pluginProxy(config)
       const external = [
         'typescript',
