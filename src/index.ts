@@ -11,4 +11,4 @@ export function ViteserPlugin(options: ViteserPluginOptions = {}): PluginOption 
   })
 }
 
-export * from './resolve/helper.ts'
+export default ViteserPlugin

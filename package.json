@@ -26,6 +26,11 @@
       "types": "./dist/message.d.ts",
       "import": "./dist/message.mjs",
       "require": "./dist/message.cjs"
+    },
+    "./util": {
+      "types": "./dist/util.d.ts",
+      "import": "./dist/util.mjs",
+      "require": "./dist/util.cjs"
     }
   },
   "main": "dist/index.cjs",
