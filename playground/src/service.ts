@@ -1,4 +1,4 @@
-import { response } from 'viteser/dist/util'
+import { response } from 'viteser/message'
 import signale from 'signale'
 import { info } from './data'
 

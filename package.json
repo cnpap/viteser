@@ -22,7 +22,11 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./*": "./*"
+    "./message": {
+      "types": "./dist/message.d.ts",
+      "import": "./dist/message.mjs",
+      "require": "./dist/message.cjs"
+    }
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
