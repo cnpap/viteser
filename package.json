@@ -48,7 +48,6 @@
     "dev": "unbuild --stub",
     "build": "unbuild",
     "build:all": "unbuild && pnpm -C playground run build",
-    "stale": "stale-del -u",
     "test": "vitest",
     "ui": "vitest --ui",
     "lint": "eslint .",
@@ -57,10 +56,7 @@
     "release": "bumpp package.json --commit --push --tag && pnpm -r publish --access public --no-git-checks"
   },
   "dependencies": {
-    "@hono/node-server": "^1.11.4",
-    "hono": "^4.4.7",
     "prettier": "^3.3.2",
-    "tsup": "^8.0.2",
     "viteser": "^0.0.1-beta.29"
   },
   "devDependencies": {
@@ -72,10 +68,8 @@
     "axios": "^1.7.2",
     "bumpp": "^9.4.0",
     "eslint": "^9.0.0",
-    "http-proxy-middleware": "^3.0.0",
     "nodemon": "^3.1.0",
     "signale": "^1.4.0",
-    "statl-del": "^0.0.4",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
     "vite": "^5.2.8",

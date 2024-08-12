@@ -3,8 +3,8 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { ConfigEnv, InlineConfig, PreviewServerHook, ServerHook, UserConfig, ViteDevServer } from 'vite'
 import { build, createServer } from 'vite'
 import type { ViteserPluginOptions } from '../type.ts'
-import { fetchTemplete } from './fetch-templates/fetch.ts'
-import { axiosTemplate } from './fetch-templates/axios.ts'
+import { fetchTemplete } from './tpl/fetch/fetch.ts'
+import { axiosTemplate } from './tpl/fetch/axios.ts'
 import type { FuncFileType } from './api-entry.ts'
 import { makeEntryCode } from './api-entry.ts'
 import { getCacheFunctions } from './helper.ts'
@@ -110,8 +110,6 @@ export function viteConfig(options: ViteserPluginOptions) {
   let fetchTemplate: TemplateMaker = fetchTemplete
   if (options.fetchTool === 'axios')
     fetchTemplate = axiosTemplate
-  const beforeInit = options.beforeInit ?? (async () => {
-  })
   let userConfig: UserConfig = null as unknown as UserConfig
   let configEnv: ConfigEnv = null as unknown as ConfigEnv
   const config: ConfigType = async (config, env) => {
@@ -119,7 +117,6 @@ export function viteConfig(options: ViteserPluginOptions) {
     configEnv = env
   }
   const configurePreviewServer: ObjectHook<PreviewServerHook> = async (server) => {
-    await beforeInit()
     // eslint-disable-next-line node/prefer-global/process
     const rootPathname = process.cwd()
     const modPathname = `file:///${rootPathname}/dist-vs-api/esm/api.mjs`.replace(/\\/g, '/')
@@ -129,7 +126,6 @@ export function viteConfig(options: ViteserPluginOptions) {
     })
   }
   const configureServer: ObjectHook<ServerHook> = async (server: ViteDevServer) => {
-    await beforeInit()
     server.middlewares.use('/vs/', async (req, res) => {
       const mod = await apiProxy(userConfig) as any
       await mod(req, res)
