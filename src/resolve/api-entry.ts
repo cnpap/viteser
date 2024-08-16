@@ -24,7 +24,10 @@ export async function transEntryIdentifier(funcPayloads: FuncFileMapType) {
       return import('${funcPayload.id}')
         .then(async m => {
           if (m.before) {
-            await m.before()
+            const beforeRes = await m.before()
+            if (beforeRes) {
+              return beforeRes
+            }
           }
           return m.${funcPayload.name}(...data)
         })
